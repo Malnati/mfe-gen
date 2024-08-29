@@ -1,12 +1,16 @@
+Aqui está o README atualizado para refletir as mudanças feitas no gerador:
+
+---
+
 # mfe-gen
 
 Single SPA micro-frontend code generator.
 
-Este repositório contém um conjunto de geradores TypeScript para criar a estrutura de um projeto front-end completo em React, incluindo componentes, estilos, hooks, serviços, validações e contextos.
+Este repositório contém um conjunto de geradores TypeScript para criar a estrutura de um projeto front-end completo em React, incluindo componentes, estilos, hooks, serviços, validações e contextos, bem como para realizar operações baseadas em requisições HTTP semelhantes a comandos CURL.
 
 ## Instalação
 
-O *react-gen* é um pacote Node.js que pode ser instalado globalmente via npm. O registro está disponível em [@codegenerator/mfe-gen](https://www.npmjs.com/package/@codegenerator/mfe-gen), então você pode instalar o pacote diretamente a partir do NPM.
+O *mfe-gen* é um pacote Node.js que pode ser instalado globalmente via npm. O registro está disponível em [@codegenerator/mfe-gen](https://www.npmjs.com/package/@codegenerator/mfe-gen), então você pode instalar o pacote diretamente a partir do NPM.
 
 Para instalar todas as dependências necessárias, execute o comando:
 
@@ -16,32 +20,41 @@ npm install -g @codegenerator/mfe-gen
 
 ## Uso
 
-Este repositório contém vários geradores para criar diferentes partes de um projeto React. Aqui está uma breve descrição de cada gerador:
+### Geração de Código Front-End
+
+Este repositório contém vários geradores para criar diferentes partes de um projeto React. Aqui está uma breve descrição de como invocar os geradores:
 
 ```bash
-npm run build && \
-    npx ts-node src/main.ts \
-                    --component "CPFInput" \
-                    --outputDir "./build" \
-                    --include "index,styles,hooks,types,service,validation,context"
-```
-
-## Executando o Gerador
-
-Para executar o gerador e criar toda a estrutura do projeto, use o comando `mfe-gen`:
-
-```bash
-react-gen \
+mfe-gen \
     --component "CPFInput" \
     --outputDir "./build" \
     --include "index,styles,hooks,types,service,validation,context"
 ```
 
-Este comando executará todos os geradores na ordem correta e copiará os arquivos estáticos para o diretório de destino.
+### Executando Requisições HTTP Similares ao CURL
+
+Você também pode utilizar o *mfe-gen* para executar operações baseadas em requisições HTTP, utilizando uma sintaxe similar ao CURL:
+
+```bash
+mfe-gen \
+    --method POST \
+    --url "https://DOMINIO.COM/api/resource" \
+    --headers "Authorization: Bearer XYZ" \
+    --data '{"key": "value"}'
+```
+
+#### Parâmetros Suportados
+
+- `--method`: Especifica o método HTTP (GET, POST, PUT, DELETE). Padrão: `GET`.
+- `--url`: URL do endpoint.
+- `--headers`: Cabeçalhos HTTP no formato `"Key: Value"`.
+- `--data`: Corpo da requisição (em formato JSON).
+- `--outputDir`: Diretório de saída para os arquivos gerados.
+- `--include`: Especifica quais componentes gerar (por exemplo, `index,styles,hooks,types,service,validation,context`).
 
 ## Estrutura do Projeto Gerado
 
-Após a execução do script, a estrutura do projeto gerado será semelhante a esta:
+Após a execução do gerador para código front-end, a estrutura do projeto gerado será semelhante a esta:
 
 ```bash
 ./build
