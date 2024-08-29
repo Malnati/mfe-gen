@@ -1,0 +1,25 @@
+{
+  "extends": "ts-config-single-spa",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "declarationDir": "dist",
+    "paths": {
+      "@/*": ["./*"],
+      "@imgs": ["src/assets/imgs"],
+      "@imgs/*": ["src/assets/imgs/*"],
+      "@documents": ["src/assets/documents"],
+      "@documents/*": ["src/assets/documents/*"],
+      "@components": ["src/components"],
+      "@components/*": ["src/components/*"],
+      "@pages": ["src/pages"],
+      "@pages/*": ["src/pages/*"],
+      "@utils": ["src/utils"],
+      "@utils/*": ["src/utils/*"],
+    }
+  },
+  "files": [
+    "src/platform-account.tsx"
+  ],
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.test*"],
+  }
