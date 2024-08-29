@@ -62,6 +62,7 @@ Após a execução do gerador para código front-end, a estrutura do projeto ger
 ├── contexts/
 │   └── MyAppContext.tsx
 ```
+> O package.json é sempre gerado
 
 ## Executando o Projeto Gerado
 
