@@ -50,13 +50,21 @@
   "license": "MIT",
   "dependencies": {
     "@types/fs-extra": "^11.0.4",
+    "@types/pg": "^8.11.6",
     "@types/yargs": "^17.0.32",
     "commander": "^12.1.0",
+    "d3": "^7.9.0",
+    "d3-force": "^3.0.0",
+    "d3-hierarchy": "^3.1.2",
+    "d3-selection": "^3.0.0",
     "dotenv": "^16.4.5",
     "fs-extra": "^11.2.0",
+    "pg": "^8.12.0",
     "prettier": "^3.3.3",
+    "reflect-metadata": "^0.2.2",
     "sharp": "^0.33.5",
     "ts-node": "^10.9.2",
+    "typeorm": "^0.3.20",
     "typescript": "^5.5.4"
   },
   "devDependencies": {
