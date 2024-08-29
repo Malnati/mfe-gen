@@ -67,20 +67,27 @@ export class ConfigUtil {
 				editorconfig: true,
 			};
 
-			const files = await fs.promises.readdir(destDir);
+			// Função recursiva para formatar arquivos dentro de diretórios
+			async function formatDirectory(directory: string) {
+				const entries = await fs.promises.readdir(directory, { withFileTypes: true });
 
-			for (const file of files) {
-				const filePath = path.join(destDir, file);
+				for (const entry of entries) {
+					const fullPath = path.join(directory, entry.name);
 
-				// Filtra os arquivos que devem ser ignorados pelo Prettier
-				if (filePath.endsWith('.ts') || filePath.endsWith('.tsx') || filePath.endsWith('.js') || filePath.endsWith('.json') || filePath.endsWith('.css') || filePath.endsWith('.md') || filePath.endsWith('.html')) {
-					const content = await fs.promises.readFile(filePath, 'utf8');
-					const formatted = await prettier.format(content, { ...options, filepath: filePath });
-					await fs.promises.writeFile(filePath, formatted);
-				} else {
-					console.log(`Ignorando arquivo não suportado pelo Prettier: ${filePath}`);
+					if (entry.isDirectory()) {
+						await formatDirectory(fullPath);  // Recurse into subdirectory
+					} else if (fullPath.endsWith('.ts') || fullPath.endsWith('.tsx') || fullPath.endsWith('.js') || fullPath.endsWith('.json') || fullPath.endsWith('.css') || fullPath.endsWith('.md') || fullPath.endsWith('.html')) {
+						const content = await fs.promises.readFile(fullPath, 'utf8');
+						const formatted = await prettier.format(content, { ...options, filepath: fullPath });
+						await fs.promises.writeFile(fullPath, formatted);
+					} else {
+						console.log(`Ignorando arquivo não suportado pelo Prettier: ${fullPath}`);
+					}
 				}
 			}
+
+			// Inicia o processo de formatação a partir do diretório raiz
+			await formatDirectory(destDir);
 
 			console.log('Arquivos gerados formatados com sucesso.');
 		} catch (err) {
