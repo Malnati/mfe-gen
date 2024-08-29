@@ -95,3 +95,10 @@ export type Engine =
 	export interface IGenerator {
 		generate(): void;
 	}
+
+	export interface RequestConfig {
+		method: string;
+		url: string;
+		headers: Record<string, string>;
+		body: string | null;
+	}
