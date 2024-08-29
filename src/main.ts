@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 // src/main.ts
 
 import { ConfigUtil } from "./utils/ConfigUtil";
@@ -16,7 +14,7 @@ import { ReadmeGenerator } from "./readme-generator";
 import { PackageJsonGenerator } from "./package-json-generator";
 import { EnvGenerator } from "./env-generator";
 
-const { requestConfig, frontendConfig }: { requestConfig: RequestConfig, frontendConfig: FrontendGeneratorConfig } = ConfigUtil.getUnifiedConfig();
+const { requestConfig, frontendConfig }: { requestConfig: RequestConfig, frontendConfig: FrontendGeneratorConfig } = ConfigUtil.getConfigs();
 
 console.log("Main...");
 console.log(`Method: ${requestConfig.method}`);
@@ -46,8 +44,12 @@ async function main() {
 
     for (const component of frontendConfig.components) {
         const GeneratorClass = generators[component];
-        const generator = new GeneratorClass(frontendConfig);
-        await generator.generate();
+        if (GeneratorClass) {
+            const generator = new GeneratorClass(frontendConfig);
+            await generator.generate();
+        } else {
+            console.warn(`Generator for component "${component}" not found.`);
+        }
     }
 }
 
