@@ -16,7 +16,7 @@ import { ReadmeGenerator } from "./readme-generator";
 import { PackageJsonGenerator } from "./package-json-generator";
 import { EnvGenerator } from "./env-generator";
 
-const requestConfig: RequestConfig = ConfigUtil.getConfig();
+const requestConfig: RequestConfig = ConfigUtil.getRequestConfig();
 
 console.log("Main...");
 console.log(`Method: ${requestConfig.method}`);
