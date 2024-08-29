@@ -23,6 +23,8 @@ export class ConfigUtil {
             .requiredOption('-a, --app <type>', 'Nome da aplicação')
             .requiredOption('-o, --outputDir <type>', 'Diretório de saída para os arquivos gerados', './build')
             .requiredOption('-f, --components <type>', 'Especifique quais componentes gerar (component, styles, hooks, types, services, validation, context, readme)', 'component')
+            .option('--dependencies <items>', 'Dependências para instalar', (value) => value.split(','), [])
+            .option('--devDependencies <items>', 'DevDependencies para instalar', (value) => value.split(','), [])
             .parse(process.argv);
 
         const options = program.opts();
@@ -42,6 +44,8 @@ export class ConfigUtil {
             app: options.app,
             outputDir: options.outputDir,
             components: components,
+            dependencies: options.dependencies,
+            devDependencies: options.devDependencies,
         };
 
         return { requestConfig, frontendConfig };

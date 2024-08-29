@@ -54,6 +54,7 @@ async function main() {
         }
     }
 
+	await new PackageJsonGenerator(frontendConfig).generate();
     await ConfigUtil.runNpmInstall(frontendConfig.outputDir);
     await ConfigUtil.formatFiles(frontendConfig.outputDir);
 }

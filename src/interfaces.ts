@@ -1,18 +1,14 @@
 // src/interfaces.ts
 
 export interface FrontendGeneratorConfig {
-	app: string
-	outputDir: string
-	components: [
-		| "component"
-		| "styles"
-		| "hooks"
-		| "types"
-		| "services"
-		| "validation"
-		| "context"
-		| "readme",
-	]
+    app: string;
+    outputDir: string;
+    components: [
+        "component" | "styles" | "hooks" | "types" | "services" | "validation" | "context" | "readme"
+    ];
+    scripts?: Record<string, string>; // Novas propriedades para scripts
+    dependencies?: Record<string, string>; // Novas propriedades para dependências
+    devDependencies?: Record<string, string>; // Novas propriedades para devDependencies
 }
 
 export interface ComponentOptions {
