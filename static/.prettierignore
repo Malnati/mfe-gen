@@ -1,4 +1,4 @@
-
+# static/.prettierignore
 # Ignore dirs:
 coverage
 dist
@@ -18,3 +18,7 @@ pnpm-lock.yaml
 .prettierignore
 yarn.lock
 yarn-error.log
+.editorconfig
+.*
+**/*.editorconfig
+**/.*

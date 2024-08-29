@@ -60,28 +60,33 @@ export class ConfigUtil {
     }
 
     public static async formatFiles(destDir: string) {
-        try {
-            const configFile = await prettier.resolveConfigFile(destDir);
+		try {
+			const ignorePath = path.resolve(__dirname, '../../.prettierignore');
+			const options = {
+				ignorePath: ignorePath,
+				editorconfig: true,
+			};
 
-            const options = {
-                config: configFile,
-                ignorePath: path.join(destDir, '.prettierignore'),
-                editorconfig: true,
-            };
+			const files = await fs.promises.readdir(destDir);
 
-            const files = await fs.promises.readdir(destDir);
+			for (const file of files) {
+				const filePath = path.join(destDir, file);
 
-            for (const filePath of files) {
-                const content = await fs.promises.readFile(path.join(destDir, filePath), 'utf8');
-                const formatted = await prettier.format(content, { ...options, filepath: filePath });
-                await fs.promises.writeFile(path.join(destDir, filePath), formatted);
-            }
+				// Filtra os arquivos que devem ser ignorados pelo Prettier
+				if (filePath.endsWith('.ts') || filePath.endsWith('.tsx') || filePath.endsWith('.js') || filePath.endsWith('.json') || filePath.endsWith('.css') || filePath.endsWith('.md') || filePath.endsWith('.html')) {
+					const content = await fs.promises.readFile(filePath, 'utf8');
+					const formatted = await prettier.format(content, { ...options, filepath: filePath });
+					await fs.promises.writeFile(filePath, formatted);
+				} else {
+					console.log(`Ignorando arquivo não suportado pelo Prettier: ${filePath}`);
+				}
+			}
 
-            console.log('Arquivos gerados formatados com sucesso.');
-        } catch (err) {
-            console.error('Erro ao formatar arquivos gerados:', err);
-        }
-    }
+			console.log('Arquivos gerados formatados com sucesso.');
+		} catch (err) {
+			console.error('Erro ao formatar arquivos gerados:', err);
+		}
+	}
 
     public static async runNpmInstall(directory: string): Promise<void> {
         console.log('Instalando dependências via npm install...');
