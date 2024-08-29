@@ -19,6 +19,7 @@ import { ServiceGenerator } from "./service-generator";
 import { ValidationGenerator } from "./validation-generator";
 import { ContextGenerator } from "./context-generator";
 import { ReadmeGenerator } from "./readme-generator";
+import { PackageJsonGenerator } from "./package-json-generator";
 
 const dbConfig = ConfigUtil.getConfig();
 
@@ -177,6 +178,7 @@ async function main() {
         "services": ServiceGenerator,
         "validation": ValidationGenerator,
         "context": ContextGenerator,
+        "package.json": PackageJsonGenerator,
         "readme": ReadmeGenerator
     };
 
