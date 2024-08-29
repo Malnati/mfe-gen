@@ -1,0 +1,20 @@
+
+# Ignore dirs:
+coverage
+dist
+node_modules
+build
+**/node_modules/**
+
+# Ignore all listed files below:
+package.json
+package-lock.json
+README.md
+tsconfig.json
+webpack.config.js
+**/*.template.ts
+pnpm-lock.yaml
+.gitignore
+.prettierignore
+yarn.lock
+yarn-error.log

@@ -1,0 +1,73 @@
+{
+  "name": "@codegenerator/mfe-gen",
+  "version": "1.0.0",
+  "description": "React code generator for micro-frontends in a Single SAP platform.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Malnati/mfe-gen.git"
+  },
+  "main": "dist/main.js",
+  "bin": {
+    "mfe-gen": "./dist/main.js",
+    "component-generator": "dist/component-generator.js",
+    "styles-generator": "dist/styles-generator.js",
+    "hooks-generator": "dist/hooks-generator.js",
+    "types-generator": "dist/types-generator.js",
+    "service-generator": "dist/service-generator.js",
+    "validation-generator": "dist/validation-generator.js",
+    "context-generator": "dist/context-generator.js",
+    "readme-generator": "dist/readme-generator.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "gen:uninstall": "npm uninstall -g @codegenerator/mfe-gen && npm list -g --depth=0",
+    "gen:install": "npm install -g @codegenerator/mfe-gen@latest",
+    "start": "npm run build && node dist/main.js",
+    "first:publishing": "npm run build && npm org set codegenerator username owner && npm publish --access public",
+    "publish:patch": "npm run build && git add . && git commit -m \"publishing a patch\" && npm version patch && npm publish",
+    "publish:minor": "npm run build && git add . && git commit -m \"publishing a minor\" && npm version minor && npm publish",
+    "publish:major": "npm run build && git add . && git commit -m \"publishing a major\" && npm version major && npm publish"
+  },
+  "keywords": [
+    "code-generator",
+    "React",
+    "TypeScript",
+    "micro-frontend",
+    "Single SAP",
+    "components",
+    "hooks",
+    "services",
+    "context",
+    "styles",
+    "validation",
+    "front-end",
+    "automation",
+    "project-setup",
+    "typescript-generator",
+    "react-generator"
+  ],
+  "author": "Ricardo Malnati",
+  "license": "MIT",
+  "dependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/pg": "^8.11.6",
+    "@types/yargs": "^17.0.32",
+    "commander": "^12.1.0",
+    "d3": "^7.9.0",
+    "d3-force": "^3.0.0",
+    "d3-hierarchy": "^3.1.2",
+    "d3-selection": "^3.0.0",
+    "dotenv": "^16.4.5",
+    "fs-extra": "^11.2.0",
+    "pg": "^8.12.0",
+    "prettier": "^3.3.3",
+    "reflect-metadata": "^0.2.2",
+    "sharp": "^0.33.5",
+    "ts-node": "^10.9.2",
+    "typeorm": "^0.3.20",
+    "typescript": "^5.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.2"
+  }
+}
