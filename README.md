@@ -1,2 +1,2 @@
-# single-spa-mfe-gen
+# mfe-gen
 Single SPA micro-frontend code generator.
