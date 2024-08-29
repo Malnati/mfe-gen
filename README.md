@@ -1,7 +1,3 @@
-Aqui está o README atualizado para refletir as mudanças feitas no gerador:
-
----
-
 # mfe-gen
 
 Single SPA micro-frontend code generator.
@@ -22,35 +18,28 @@ npm install -g @codegenerator/mfe-gen
 
 ### Geração de Código Front-End
 
-Este repositório contém vários geradores para criar diferentes partes de um projeto React. Aqui está uma breve descrição de como invocar os geradores:
+Para gerar componentes de um projeto React, você precisa informar todos os parâmetros necessários de uma vez só. Aqui está um exemplo:
 
 ```bash
 mfe-gen \
-    --component "CPFInput" \
-    --outputDir "./build" \
-    --include "index,styles,hooks,types,service,validation,context"
-```
-
-### Executando Requisições HTTP Similares ao CURL
-
-Você também pode utilizar o *mfe-gen* para executar operações baseadas em requisições HTTP, utilizando uma sintaxe similar ao CURL:
-
-```bash
-mfe-gen \
-    --method POST \
+    --method GET \
     --url "https://DOMINIO.COM/api/resource" \
     --headers "Authorization: Bearer XYZ" \
-    --data '{"key": "value"}'
+    --data '{"key": "value"}' \
+    --app "MyApp" \
+    --outputDir "./build" \
+    --components "component,styles,hooks,types,services,validation,context"
 ```
 
-#### Parâmetros Suportados
+### Parâmetros Suportados
 
-- `--method`: Especifica o método HTTP (GET, POST, PUT, DELETE). Padrão: `GET`.
+- `--method`: Especifica o método HTTP (GET, POST, PUT, DELETE).
 - `--url`: URL do endpoint.
 - `--headers`: Cabeçalhos HTTP no formato `"Key: Value"`.
 - `--data`: Corpo da requisição (em formato JSON).
-- `--outputDir`: Diretório de saída para os arquivos gerados.
-- `--include`: Especifica quais componentes gerar (por exemplo, `index,styles,hooks,types,service,validation,context`).
+- `--app`: Nome da aplicação.
+- `--outputDir`: Diretório de saída para os arquivos gerados (padrão: `./build`).
+- `--components`: Especifica quais componentes gerar (por exemplo, `component,styles,hooks,types,services,validation,context`).
 
 ## Estrutura do Projeto Gerado
 
@@ -59,19 +48,19 @@ Após a execução do gerador para código front-end, a estrutura do projeto ger
 ```bash
 ./build
 ├── components/
-│   └── CPFInput/
+│   └── MyApp/
 │       ├── index.tsx
 │       ├── styles.ts
 │       ├── hooks.ts
 │       ├── types.ts
 ├── services/
-│   └── CPFService.ts
+│   └── MyAppService.ts
 ├── validations/
-│   └── CPFValidation.ts
+│   └── MyAppValidation.ts
 ├── transformers/
-│   └── CPFTransformer.ts
+│   └── MyAppTransformer.ts
 ├── contexts/
-│   └── ModalContext.tsx
+│   └── MyAppContext.tsx
 ```
 
 ## Executando o Projeto Gerado

@@ -11,3 +11,5 @@ README.md
 tsconfig.json
 webpack.config.js
 **/*.template.ts
+**/*.editorconfig
+**/.*

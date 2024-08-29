@@ -1,9 +1,7 @@
 #!/usr/bin/env node
 
-// src/main.ts
-
 import { ConfigUtil } from "./utils/ConfigUtil";
-import { RequestConfig } from "./interfaces";
+import { RequestConfig, FrontendGeneratorConfig } from "./interfaces";
 
 import { ComponentGenerator } from "./component-generator";
 import { StylesGenerator } from "./styles-generator";
@@ -16,7 +14,7 @@ import { ReadmeGenerator } from "./readme-generator";
 import { PackageJsonGenerator } from "./package-json-generator";
 import { EnvGenerator } from "./env-generator";
 
-const requestConfig: RequestConfig = ConfigUtil.getRequestConfig();
+const { requestConfig, frontendConfig }: { requestConfig: RequestConfig, frontendConfig: FrontendGeneratorConfig } = ConfigUtil.getConfigs();
 
 console.log("Main...");
 console.log(`Method: ${requestConfig.method}`);
@@ -26,7 +24,13 @@ if (requestConfig.body) {
     console.log(`Body: ${requestConfig.body}`);
 }
 
+console.log(`App: ${frontendConfig.app}`);
+console.log(`Output Directory: ${frontendConfig.outputDir}`);
+console.log(`Components: ${frontendConfig.components.join(", ")}`);
+
 async function main() {
+    await ConfigUtil.copyStaticFiles(frontendConfig.outputDir);
+
     const generators: { [key: string]: any } = {
         "component": ComponentGenerator,
         "styles": StylesGenerator,
@@ -40,11 +44,18 @@ async function main() {
         "readme": ReadmeGenerator
     };
 
-    // Aqui você pode adicionar lógica para selecionar qual gerador usar
-    // Para o exemplo, vamos apenas utilizar o gerador de `env`
-    const GeneratorClass = generators['env'];
-    const generator = new GeneratorClass(requestConfig);
-    await generator.generate();
+    for (const component of frontendConfig.components) {
+        const GeneratorClass = generators[component];
+        if (GeneratorClass) {
+            const generator = new GeneratorClass(frontendConfig);
+            await generator.generate();
+        } else {
+            console.warn(`Generator for component "${component}" not found.`);
+        }
+    }
+
+    await ConfigUtil.runNpmInstall(frontendConfig.outputDir);
+    await ConfigUtil.formatFiles(frontendConfig.outputDir);
 }
 
 main();
