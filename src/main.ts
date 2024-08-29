@@ -20,6 +20,7 @@ import { ValidationGenerator } from "./validation-generator";
 import { ContextGenerator } from "./context-generator";
 import { ReadmeGenerator } from "./readme-generator";
 import { PackageJsonGenerator } from "./package-json-generator";
+import { EnvGenerator } from "./env-generator";
 
 const dbConfig = ConfigUtil.getConfig();
 
@@ -179,6 +180,7 @@ async function main() {
         "validation": ValidationGenerator,
         "context": ContextGenerator,
         "package.json": PackageJsonGenerator,
+        "env": EnvGenerator,
         "readme": ReadmeGenerator
     };
 
