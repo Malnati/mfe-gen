@@ -91,7 +91,3 @@ Este projeto é licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE
 ## Pré-requisitos
 
 Este gerador assume que você já tem uma estrutura básica de projeto React configurada. Certifique-se de ter o Node.js e o npm instalados em seu ambiente de desenvolvimento.
-
----
-
-Essa versão do README é adaptada para o novo contexto de geração de código front-end utilizando React, refletindo a estrutura e os componentes que discutimos anteriormente.
