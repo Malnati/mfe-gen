@@ -13,16 +13,16 @@ export class ConfigUtil {
         const program = new Command();
 
         program
-            .option('-X, --method <type>', 'Método HTTP (GET, POST, PUT, DELETE)', 'GET')
-            .option('-U, --url <type>', 'URL do endpoint')
-            .option('-H, --headers <type>', 'Cabeçalhos HTTP no formato "Key: Value"', (value, previous) => {
+            .requiredOption('-X, --method <type>', 'Método HTTP (GET, POST, PUT, DELETE)', 'GET')
+            .requiredOption('-U, --url <type>', 'URL do endpoint')
+            .requiredOption('-H, --headers <type>', 'Cabeçalhos HTTP no formato "Key: Value"', (value, previous) => {
                 const [key, val] = value.split(':').map(v => v.trim());
                 return { ...previous, [key]: val };
             }, {})
-            .option('-d, --data <type>', 'Corpo da requisição (JSON)', '')
-            .option('-a, --app <type>', 'Nome da aplicação')
-            .option('-o, --outputDir <type>', 'Diretório de saída para os arquivos gerados', './build')
-            .option('-f, --components <type>', 'Especifique quais componentes gerar (component, styles, hooks, types, services, validation, context, readme)', 'component')
+            .requiredOption('-d, --data <type>', 'Corpo da requisição (JSON)', '')
+            .requiredOption('-a, --app <type>', 'Nome da aplicação')
+            .requiredOption('-o, --outputDir <type>', 'Diretório de saída para os arquivos gerados', './build')
+            .requiredOption('-f, --components <type>', 'Especifique quais componentes gerar (component, styles, hooks, types, services, validation, context, readme)', 'component')
             .parse(process.argv);
 
         const options = program.opts();
