@@ -40,6 +40,8 @@ mfe-gen \
 - `--app`: Nome da aplicação.
 - `--outputDir`: Diretório de saída para os arquivos gerados (padrão: `./build`).
 - `--components`: Especifica quais componentes gerar (por exemplo, `component,styles,hooks,types,services,validation,context`).
+- `--dependencies`: Lista de dependências a serem instaladas.
+- `--devDependencies`: Lista de devDependencies a serem instaladas.
 
 ## Estrutura do Projeto Gerado
 
@@ -62,7 +64,7 @@ Após a execução do gerador para código front-end, a estrutura do projeto ger
 ├── contexts/
 │   └── MyAppContext.tsx
 ```
-> O package.json é sempre gerado
+> O `package.json` é sempre gerado.
 
 ## Executando o Projeto Gerado
 
