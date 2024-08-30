@@ -18,6 +18,8 @@ npm install -g @codegenerator/mfe-gen
 
 ### Geração de Código Front-End
 
+Este gerador funciona realizando uma requisição HTTP ao servidor com base nos parâmetros fornecidos pelo usuário. A resposta desta requisição é utilizada para criar um arquivo JSON de metadados que contém tanto as informações da requisição quanto da resposta. A partir desses metadados, todos os arquivos de código-fonte necessários são gerados.
+
 Para gerar componentes, serviços, hooks, contextos, arquivos de ambiente, estilos, tipos, validações e um `README.md` personalizado de um projeto React, você precisa informar todos os parâmetros necessários de uma vez só. Aqui está um exemplo:
 
 ```bash
@@ -35,7 +37,7 @@ npm run build && npx ts-node src/main.ts \
 - `--method`: Especifica o método HTTP (GET, POST, PUT, DELETE).
 - `--url`: URL do endpoint.
 - `--headers`: Cabeçalhos HTTP no formato `"Key: Value"`.
-- `--data`: Corpo da requisição (em formato JSON).
+- `--data`: Corpo da requisição (em formato JSON). (opcional)
 - `--app`: Nome da aplicação.
 - `--outputDir`: Diretório de saída para os arquivos gerados (padrão: `./build`).
 - `--components`: Especifica quais componentes gerar (por exemplo, `component,services,styles,hooks,types,validation,context,readme`).
@@ -65,6 +67,7 @@ Após a execução do gerador para código front-end, a estrutura do projeto ger
 ├── .env.development
 ├── .env.production
 ├── .env.stage
+├── request-response-metadata.json
 ├── README.md
 ```
 

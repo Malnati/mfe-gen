@@ -13,6 +13,7 @@ import { ContextGenerator } from "./context-generator";
 import { ReadmeGenerator } from "./readme-generator";
 import { PackageJsonGenerator } from "./package-json-generator";
 import { EnvGenerator } from "./env-generator";
+import { MetadataGenerator } from "./metadata-generator";
 
 const { requestConfig, frontendConfig }: { requestConfig: RequestConfig, frontendConfig: FrontendGeneratorConfig } = ConfigUtil.getConfigs();
 
@@ -30,6 +31,10 @@ console.log(`Components: ${frontendConfig.components.join(", ")}`);
 
 async function main() {
     await ConfigUtil.copyStaticFiles(frontendConfig.outputDir);
+
+    // Executa o MetadataGenerator antes dos outros geradores
+    const metadataGenerator = new MetadataGenerator(requestConfig, frontendConfig); 
+    await metadataGenerator.generate();
 
     const generators: { [key: string]: any } = {
         "component": ComponentGenerator,
