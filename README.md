@@ -18,7 +18,7 @@ npm install -g @codegenerator/mfe-gen
 
 ### Geração de Código Front-End
 
-Para gerar componentes, serviços, hooks, contextos, arquivos de ambiente, estilos, tipos e validações de um projeto React, você precisa informar todos os parâmetros necessários de uma vez só. Aqui está um exemplo:
+Para gerar componentes, serviços, hooks, contextos, arquivos de ambiente, estilos, tipos, validações e um `README.md` personalizado de um projeto React, você precisa informar todos os parâmetros necessários de uma vez só. Aqui está um exemplo:
 
 ```bash
 npm run build && npx ts-node src/main.ts \
@@ -27,7 +27,7 @@ npm run build && npx ts-node src/main.ts \
   -H 'Authorization: Bearer XYZ' \
   -a 'MyApp' \
   -o './build' \
-  -f 'component,services,hooks,context,env,styles,types,validation'
+  -f 'component,services,hooks,context,env,styles,types,validation,readme'
 ```
 
 ### Parâmetros Suportados
@@ -38,9 +38,9 @@ npm run build && npx ts-node src/main.ts \
 - `--data`: Corpo da requisição (em formato JSON).
 - `--app`: Nome da aplicação.
 - `--outputDir`: Diretório de saída para os arquivos gerados (padrão: `./build`).
-- `--components`: Especifica quais componentes gerar (por exemplo, `component,services,styles,hooks,types,validation,context`).
-- `--dependencies`: Lista de dependências a serem instaladas.
-- `--devDependencies`: Lista de devDependencies a serem instaladas.
+- `--components`: Especifica quais componentes gerar (por exemplo, `component,services,styles,hooks,types,validation,context,readme`).
+- `--dependencies`: Lista de dependências a serem instaladas. (opcional)
+- `--devDependencies`: Lista de devDependencies a serem instaladas. (opcional)
 
 ## Estrutura do Projeto Gerado
 
@@ -65,6 +65,7 @@ Após a execução do gerador para código front-end, a estrutura do projeto ger
 ├── .env.development
 ├── .env.production
 ├── .env.stage
+├── README.md
 ```
 
 > O `package.json` é sempre gerado.
