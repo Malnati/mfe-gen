@@ -39,8 +39,8 @@ npm run build && npx ts-node src/main.ts \
 - `--app`: Nome da aplicação.
 - `--outputDir`: Diretório de saída para os arquivos gerados (padrão: `./build`).
 - `--components`: Especifica quais componentes gerar (por exemplo, `component,services,styles,hooks,types,validation,context,readme`).
-- `--dependencies`: Lista de dependências a serem instaladas.
-- `--devDependencies`: Lista de devDependencies a serem instaladas.
+- `--dependencies`: Lista de dependências a serem instaladas. (opcional)
+- `--devDependencies`: Lista de devDependencies a serem instaladas. (opcional)
 
 ## Estrutura do Projeto Gerado
 
