@@ -52,6 +52,7 @@
     "@types/fs-extra": "^11.0.4",
     "@types/pg": "^8.11.6",
     "@types/yargs": "^17.0.32",
+    "axios": "^1.7.5",
     "commander": "^12.1.0",
     "d3": "^7.9.0",
     "d3-force": "^3.0.0",
