@@ -18,7 +18,7 @@ npm install -g @codegenerator/mfe-gen
 
 ### Geração de Código Front-End
 
-Para gerar componentes, serviços, hooks, contextos, arquivos de ambiente, estilos e tipos de um projeto React, você precisa informar todos os parâmetros necessários de uma vez só. Aqui está um exemplo:
+Para gerar componentes, serviços, hooks, contextos, arquivos de ambiente, estilos, tipos e validações de um projeto React, você precisa informar todos os parâmetros necessários de uma vez só. Aqui está um exemplo:
 
 ```bash
 npm run build && npx ts-node src/main.ts \
@@ -27,7 +27,7 @@ npm run build && npx ts-node src/main.ts \
   -H 'Authorization: Bearer XYZ' \
   -a 'MyApp' \
   -o './build' \
-  -f 'component,services,hooks,context,env,styles,types'
+  -f 'component,services,hooks,context,env,styles,types,validation'
 ```
 
 ### Parâmetros Suportados

@@ -8,7 +8,7 @@ import { StylesGenerator } from "./styles-generator";
 import { HooksGenerator } from "./hooks-generator";
 import { TypesGenerator } from "./types-generator";
 import { ServiceGenerator } from "./service-generator";
-import { ValidationGenerator } from "./validation-generator";
+import { ValidationsGenerator } from "./validation-generator";
 import { ContextGenerator } from "./context-generator";
 import { ReadmeGenerator } from "./readme-generator";
 import { PackageJsonGenerator } from "./package-json-generator";
@@ -37,7 +37,7 @@ async function main() {
         "hooks": HooksGenerator,
         "types": TypesGenerator,
         "services": ServiceGenerator, // Passar requestConfig junto com frontendConfig
-        "validation": ValidationGenerator,
+        "validation": ValidationsGenerator,
         "context": ContextGenerator,
         "package.json": PackageJsonGenerator,
         "env": EnvGenerator,
