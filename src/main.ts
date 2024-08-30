@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+// src/main.ts
 
 import { ConfigUtil } from "./utils/ConfigUtil";
 import { RequestConfig, FrontendGeneratorConfig } from "./interfaces";
@@ -36,7 +36,7 @@ async function main() {
         "styles": StylesGenerator,
         "hooks": HooksGenerator,
         "types": TypesGenerator,
-        "services": ServiceGenerator,
+        "services": ServiceGenerator, // Passar requestConfig junto com frontendConfig
         "validation": ValidationGenerator,
         "context": ContextGenerator,
         "package.json": PackageJsonGenerator,
@@ -47,14 +47,13 @@ async function main() {
     for (const component of frontendConfig.components) {
         const GeneratorClass = generators[component];
         if (GeneratorClass) {
-            const generator = new GeneratorClass(frontendConfig);
+            const generator = new GeneratorClass({ ...frontendConfig, requestConfig });
             await generator.generate();
         } else {
             console.warn(`Generator for component "${component}" not found.`);
         }
     }
 
-	await new PackageJsonGenerator(frontendConfig).generate();
     await ConfigUtil.runNpmInstall(frontendConfig.outputDir);
     await ConfigUtil.formatFiles(frontendConfig.outputDir);
 }

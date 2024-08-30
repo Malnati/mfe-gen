@@ -18,7 +18,7 @@ npm install -g @codegenerator/mfe-gen
 
 ### Geração de Código Front-End
 
-Para gerar componentes de um projeto React, você precisa informar todos os parâmetros necessários de uma vez só. Aqui está um exemplo:
+Para gerar componentes e serviços de um projeto React, você precisa informar todos os parâmetros necessários de uma vez só. Aqui está um exemplo:
 
 ```bash
 mfe-gen \
@@ -28,7 +28,7 @@ mfe-gen \
     --data '{"key": "value"}' \
     --app "MyApp" \
     --outputDir "./build" \
-    --components "component,styles,hooks,types,services,validation,context"
+    --components "component,services"
 ```
 
 ### Parâmetros Suportados
@@ -39,7 +39,7 @@ mfe-gen \
 - `--data`: Corpo da requisição (em formato JSON).
 - `--app`: Nome da aplicação.
 - `--outputDir`: Diretório de saída para os arquivos gerados (padrão: `./build`).
-- `--components`: Especifica quais componentes gerar (por exemplo, `component,styles,hooks,types,services,validation,context`).
+- `--components`: Especifica quais componentes gerar (por exemplo, `component,services,styles,hooks,types,validation,context`).
 - `--dependencies`: Lista de dependências a serem instaladas.
 - `--devDependencies`: Lista de devDependencies a serem instaladas.
 
@@ -64,6 +64,7 @@ Após a execução do gerador para código front-end, a estrutura do projeto ger
 ├── contexts/
 │   └── MyAppContext.tsx
 ```
+
 > O `package.json` é sempre gerado.
 
 ## Executando o Projeto Gerado
