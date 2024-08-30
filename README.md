@@ -18,7 +18,7 @@ npm install -g @codegenerator/mfe-gen
 
 ### Geração de Código Front-End
 
-Para gerar componentes e serviços de um projeto React, você precisa informar todos os parâmetros necessários de uma vez só. Aqui está um exemplo:
+Para gerar componentes, serviços e hooks de um projeto React, você precisa informar todos os parâmetros necessários de uma vez só. Aqui está um exemplo:
 
 ```bash
 mfe-gen \
@@ -28,7 +28,7 @@ mfe-gen \
     --data '{"key": "value"}' \
     --app "MyApp" \
     --outputDir "./build" \
-    --components "component,services"
+    --components "component,services,hooks"
 ```
 
 ### Parâmetros Suportados
