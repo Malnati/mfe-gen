@@ -2,33 +2,43 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { IGenerator, FrontendGeneratorConfig } from "./interfaces";
-import { BaseGenerator } from "./base-generator";
+import { IGenerator, FrontendGeneratorConfig, RequestConfig } from './interfaces';
+import { BaseGenerator } from './base-generator';
 
 export class TypesGenerator extends BaseGenerator implements IGenerator {
-    constructor(config: FrontendGeneratorConfig) {
-        super(config);
+    private frontendConfig: FrontendGeneratorConfig;
+    private requestConfig: RequestConfig;
+
+    constructor(requestConfig: RequestConfig, frontendConfig: FrontendGeneratorConfig) {
+        super(frontendConfig);
+        this.frontendConfig = frontendConfig;
+        this.requestConfig = requestConfig;
     }
 
     generate() {
-        const typeName = `${this.config.app}Props`;  // Define o nome da interface baseada no nome da aplicação
-
-        // Conteúdo do arquivo types.ts
         const typesContent = `
-export interface ${typeName} {
-    // Defina aqui as props específicas para o componente ${this.config.app}
+export interface IRequest {
+    method: string;
+    url: string;
+    headers: Record<string, string>;
+    body?: any;
+}
+
+export interface IResponse {
+    status: number;
+    headers: Record<string, string>;
+    data: any;
 }
 `;
 
-        // Define o caminho para o arquivo types.ts
-        const filePath = path.join(this.config.outputDir, `components/${this.config.app}/types.ts`);
+        // Definir o caminho do arquivo a ser gerado
+        const filePath = path.join(this.frontendConfig.outputDir, `src/types.d.ts`);
 
-        // Cria o diretório caso não exista
+        // Cria o diretório se não existir
         fs.mkdirSync(path.dirname(filePath), { recursive: true });
 
-        // Escreve o conteúdo no arquivo types.ts
-        fs.writeFileSync(filePath, typesContent.trim());
-
+        // Escreve o conteúdo no arquivo
+        fs.writeFileSync(filePath, typesContent);
         console.log(`Types generated at ${filePath}`);
     }
 }
