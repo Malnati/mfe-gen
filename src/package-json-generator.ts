@@ -29,7 +29,6 @@ export class PackageJsonGenerator extends BaseGenerator implements IGenerator {
                 "check-format": "prettier --check .",
                 test: "cross-env BABEL_ENV=test jest",
                 "watch-tests": "cross-env BABEL_ENV=test jest --watch",
-                prepare: "husky install",
                 coverage: "cross-env BABEL_ENV=test jest --coverage",
                 "build:types": "tsc"
             },
