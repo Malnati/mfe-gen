@@ -1,8 +1,6 @@
 // src/metadata-generator.ts
 
-import * as fs from 'fs';
 import axios from 'axios';
-import * as path from 'path';
 import { BaseGenerator } from './base-generator';
 import { FrontendGeneratorConfig, IGenerator, RequestConfig } from './interfaces';
 
