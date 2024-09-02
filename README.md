@@ -20,7 +20,19 @@ npm install -g @codegenerator/mfe-gen
 
 Este gerador funciona realizando uma requisição HTTP ao servidor com base nos parâmetros fornecidos pelo usuário. A resposta desta requisição é utilizada para criar um arquivo JSON de metadados que contém tanto as informações da requisição quanto da resposta. A partir desses metadados, todos os arquivos de código-fonte necessários são gerados.
 
-Para gerar componentes, serviços, hooks, contextos, arquivos de ambiente, estilos, tipos, validações e um `README.md` personalizado de um projeto React, você precisa informar todos os parâmetros necessários de uma vez só. Aqui está um exemplo:
+### Utilizando Metadados para Geração de Arquivos `.env`
+
+Após a criação do arquivo `request-response-metadata.json`, o gerador de arquivos `.env` utiliza essas informações para preencher automaticamente os parâmetros relevantes nos arquivos `.env.development`, `.env.production`, e `.env.stage`. Isso garante que os arquivos `.env` reflitam de forma precisa os ambientes de desenvolvimento, produção e estágio, utilizando dados reais obtidos do back-end.
+
+Por exemplo, os valores das variáveis de ambiente como `VITE_API_URL`, `VITE_DATABASE_URL`, e outros URLs podem ser preenchidos com a URL da requisição realizada. Se os metadados não contiverem todas as informações necessárias, o gerador aplicará valores padrão, garantindo a robustez do processo.
+
+### Geração de Arquivo `types.d.ts`
+
+O gerador também cria automaticamente um arquivo `types.d.ts`, que contém todas as definições de tipos e interfaces necessárias para o micro front-end. Esse arquivo é crucial para garantir a integridade e a segurança dos tipos entre o front-end e o back-end, fornecendo tipagem forte para os dados de requisição e resposta. As interfaces incluem estruturas como `IRequest` e `IResponse`, que são geradas com base nos dados presentes nos metadados.
+
+### Comando de Geração
+
+Para gerar os componentes, serviços, hooks, contextos, arquivos de ambiente, estilos, validações, e o `README.md` personalizado de um projeto React, você precisa informar os parâmetros necessários para a requisição e o nome da aplicação. Aqui está um exemplo:
 
 ```bash
 npm run build && npx ts-node src/main.ts \
@@ -29,8 +41,10 @@ npm run build && npx ts-node src/main.ts \
   -H 'Authorization: Bearer XYZ' \
   -a 'MyApp' \
   -o './build' \
-  -f 'component,services,hooks,context,env,styles,types,validation,readme'
+  -f 'component,services,hooks,context,styles,validation'
 ```
+
+> **Nota:** Os arquivos `.env`, `types.d.ts`, `request-response-metadata.json`, `package.json`, e `README.md` são gerados automaticamente e não precisam ser especificados nos parâmetros.
 
 ### Parâmetros Suportados
 
@@ -40,7 +54,7 @@ npm run build && npx ts-node src/main.ts \
 - `--data`: Corpo da requisição (em formato JSON). (opcional)
 - `--app`: Nome da aplicação.
 - `--outputDir`: Diretório de saída para os arquivos gerados (padrão: `./build`).
-- `--components`: Especifica quais componentes gerar (por exemplo, `component,services,styles,hooks,types,validation,context,readme`).
+- `--components`: Especifica quais componentes gerar (por exemplo, `component,services,styles,hooks,validation,context,readme`).
 - `--dependencies`: Lista de dependências a serem instaladas. (opcional)
 - `--devDependencies`: Lista de devDependencies a serem instaladas. (opcional)
 
@@ -68,6 +82,7 @@ Após a execução do gerador para código front-end, a estrutura do projeto ger
 ├── .env.production
 ├── .env.stage
 ├── request-response-metadata.json
+├── types.d.ts
 ├── README.md
 ```
 

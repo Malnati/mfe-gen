@@ -2,11 +2,21 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { IGenerator, FrontendGeneratorConfig } from "./interfaces";
+import { IGenerator, FrontendGeneratorConfig, RequestConfig } from "./interfaces";
 import { BaseGenerator } from "./base-generator";
 import { exec } from "child_process";
 
 export class PackageJsonGenerator extends BaseGenerator implements IGenerator {
+	
+    private frontendConfig: FrontendGeneratorConfig;
+    private requestConfig: RequestConfig;
+
+    constructor(requestConfig: RequestConfig, frontendConfig: FrontendGeneratorConfig) {
+        super(frontendConfig);
+        this.frontendConfig = frontendConfig;
+        this.requestConfig = requestConfig;
+    }
+
     async generate() {
         const packageJsonContent = {
             name: `@platform/${this.config.app}`,
