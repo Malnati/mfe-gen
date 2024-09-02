@@ -12,6 +12,14 @@ export class ReadmeGenerator extends BaseGenerator implements IGenerator {
         this.frontendConfig = frontendConfig;
         this.requestConfig = requestConfig;
     }
+    private frontendConfig: FrontendGeneratorConfig;
+    private requestConfig: RequestConfig;
+
+    constructor(requestConfig: RequestConfig, frontendConfig: FrontendGeneratorConfig) {
+        super(frontendConfig);
+        this.frontendConfig = frontendConfig;
+        this.requestConfig = requestConfig;
+    }
     generate() {
         const content = this.createReadmeContent();
         this.writeFileSync('README.md', content);

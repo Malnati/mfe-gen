@@ -46,6 +46,8 @@ npm run build && npx ts-node src/main.ts \
 
 > **Nota:** Os arquivos `.env`, `types.d.ts`, `request-response-metadata.json`, `package.json`, e `README.md` são gerados automaticamente e não precisam ser especificados nos parâmetros.
 
+> **Nota:** Os arquivos `.env`, `types.d.ts`, `request-response-metadata.json`, `package.json`, e `README.md` são gerados automaticamente e não precisam ser especificados nos parâmetros.
+
 ### Parâmetros Suportados
 
 - `--method`: Especifica o método HTTP (GET, POST, PUT, DELETE).
@@ -76,6 +78,7 @@ Após a execução do gerador para código front-end, a estrutura do projeto ger
 ├── .env.production
 ├── .env.stage
 ├── request-response-metadata.json
+├── types.d.ts
 ├── README.md
 ```
 

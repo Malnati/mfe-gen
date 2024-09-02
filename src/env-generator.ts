@@ -1,5 +1,7 @@
 // src/env-generator.ts
 
+// src/env-generator.ts
+
 import * as fs from 'fs';
 import * as path from 'path';
 import { FrontendGeneratorConfig, IGenerator, RequestConfig } from "./interfaces";

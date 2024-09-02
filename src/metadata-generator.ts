@@ -7,10 +7,12 @@ import { FrontendGeneratorConfig, IGenerator, RequestConfig } from './interfaces
 export class MetadataGenerator extends BaseGenerator implements IGenerator {
     private frontendConfig: FrontendGeneratorConfig;
     private requestConfig: RequestConfig;
+    private requestConfig: RequestConfig;
 
     constructor(requestConfig: RequestConfig, frontendConfig: FrontendGeneratorConfig) {
         super(frontendConfig);
         this.frontendConfig = frontendConfig;
+        this.requestConfig = requestConfig;
         this.requestConfig = requestConfig;
     }
 
@@ -22,7 +24,28 @@ export class MetadataGenerator extends BaseGenerator implements IGenerator {
                 headers: this.requestConfig.headers,
                 data: this.requestConfig.body,
             });
+    async generate() {
+        try {
+            const response = await axios({
+                method: this.requestConfig.method,
+                url: this.requestConfig.url,
+                headers: this.requestConfig.headers,
+                data: this.requestConfig.body,
+            });
 
+            const metadata = {
+                request: {
+                    method: this.requestConfig.method,
+                    url: this.requestConfig.url,
+                    headers: this.requestConfig.headers,
+                    data: this.requestConfig.body,
+                },
+                response: {
+                    status: response.status,
+                    headers: response.headers,
+                    data: response.data,
+                },
+            };
             const metadata = {
                 request: {
                     method: this.requestConfig.method,
