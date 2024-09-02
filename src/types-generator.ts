@@ -11,13 +11,6 @@ export class TypesGenerator extends BaseGenerator implements IGenerator {
         super(frontendConfig);
         this.requestConfig = requestConfig;
         this.frontendConfig = frontendConfig;
-    private frontendConfig: FrontendGeneratorConfig;
-    private requestConfig: RequestConfig;
-
-    constructor(requestConfig: RequestConfig, frontendConfig: FrontendGeneratorConfig) {
-        super(frontendConfig);
-        this.requestConfig = requestConfig;
-        this.frontendConfig = frontendConfig;
     }
 
     generate() {
