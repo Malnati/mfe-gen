@@ -2,10 +2,18 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { IGenerator } from "./interfaces";
+import { FrontendGeneratorConfig, IGenerator, RequestConfig } from "./interfaces";
 import { BaseGenerator } from "./base-generator";
 
 export class ReadmeGenerator extends BaseGenerator implements IGenerator {
+    private frontendConfig: FrontendGeneratorConfig;
+    private requestConfig: RequestConfig;
+
+    constructor(requestConfig: RequestConfig, frontendConfig: FrontendGeneratorConfig) {
+        super(frontendConfig);
+        this.frontendConfig = frontendConfig;
+        this.requestConfig = requestConfig;
+    }
     generate() {
         const content = this.createReadmeContent();
         const filePath = path.join(this.config.outputDir, 'README.md');

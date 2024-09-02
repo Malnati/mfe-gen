@@ -2,7 +2,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { IGenerator } from "./interfaces";
+import { FrontendGeneratorConfig, IGenerator, RequestConfig } from "./interfaces";
 import { BaseGenerator } from "./base-generator";
 
 export class EnvGenerator extends BaseGenerator implements IGenerator {
@@ -13,9 +13,13 @@ export class EnvGenerator extends BaseGenerator implements IGenerator {
     };
 
     private envConfig: Record<string, string>;
+	frontendConfig: FrontendGeneratorConfig;
+	requestConfig: RequestConfig;
 
-    constructor(config: any) {
-        super(config);
+	constructor(requestConfig: RequestConfig, frontendConfig: FrontendGeneratorConfig) {
+        super(frontendConfig);
+        this.frontendConfig = frontendConfig;
+        this.requestConfig = requestConfig;
 
         // Carrega os metadados
         const metadata = this.loadMetadata();
