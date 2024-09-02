@@ -26,6 +26,10 @@ Após a criação do arquivo `request-response-metadata.json`, o gerador de arqu
 
 Por exemplo, os valores das variáveis de ambiente como `VITE_API_URL`, `VITE_DATABASE_URL`, e outros URLs podem ser preenchidos com a URL da requisição realizada. Se os metadados não contiverem todas as informações necessárias, o gerador aplicará valores padrão, garantindo a robustez do processo.
 
+### Geração de Arquivo `types.d.ts`
+
+O gerador também cria automaticamente um arquivo `types.d.ts`, que contém todas as definições de tipos e interfaces necessárias para o micro front-end. Esse arquivo é crucial para garantir a integridade e a segurança dos tipos entre o front-end e o back-end, fornecendo tipagem forte para os dados de requisição e resposta. As interfaces incluem estruturas como `IRequest` e `IResponse`, que são geradas com base nos dados presentes nos metadados.
+
 ### Comando de Geração
 
 Para gerar componentes, serviços, hooks, contextos, arquivos de ambiente, estilos, tipos, validações e um `README.md` personalizado de um projeto React, você precisa informar todos os parâmetros necessários de uma vez só. Aqui está um exemplo:
@@ -76,6 +80,7 @@ Após a execução do gerador para código front-end, a estrutura do projeto ger
 ├── .env.production
 ├── .env.stage
 ├── request-response-metadata.json
+├── types.d.ts
 ├── README.md
 ```
 
