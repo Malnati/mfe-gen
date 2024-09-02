@@ -8,43 +8,56 @@ import { FrontendGeneratorConfig, IGenerator, RequestConfig } from './interfaces
 
 export class MetadataGenerator extends BaseGenerator implements IGenerator {
     private frontendConfig: FrontendGeneratorConfig;
-	private requestConfig: RequestConfig;
+    private requestConfig: RequestConfig;
 
     constructor(requestConfig: RequestConfig, frontendConfig: FrontendGeneratorConfig) {
         super(frontendConfig);
         this.frontendConfig = frontendConfig;
-		this.requestConfig = requestConfig;
+        this.requestConfig = requestConfig;
     }
 
+    async generate() {
+        try {
+            const response = await axios({
+                method: this.requestConfig.method,
+                url: this.requestConfig.url,
+                headers: this.requestConfig.headers,
+                data: this.requestConfig.body,
+            });
 
-  async generate() {
-    try {
-      const response = await axios({
-        method: this.requestConfig.method,
-        url: this.requestConfig.url,
-        headers: this.requestConfig.headers,
-        data: this.requestConfig.body,
-      });
+            const metadata = {
+                request: {
+                    method: this.requestConfig.method,
+                    url: this.requestConfig.url,
+                    headers: this.requestConfig.headers,
+                    data: this.requestConfig.body,
+                },
+                response: {
+                    status: response.status,
+                    headers: response.headers,
+                    data: response.data,
+                },
+            };
 
-      const metadata = {
-        request: {
-          method: this.requestConfig.method,
-          url: this.requestConfig.url,
-          headers: this.requestConfig.headers,
-          data: this.requestConfig.body,
-        },
-        response: {
-          status: response.status,
-          headers: response.headers,
-          data: response.data,
-        },
-      };
-
-      const metadataPath = path.join(this.frontendConfig.outputDir, 'request-response-metadata.json');
-      fs.writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
-      console.log(`Metadata generated at ${metadataPath}`);
-    } catch (error) {
-      console.error('Failed to generate metadata:', error);
+            const metadataPath = path.join(this.frontendConfig.outputDir, 'request-response-metadata.json');
+            fs.writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
+            console.log(`Metadata generated at ${metadataPath}`);
+        } catch (error) {
+            this.handleError(error);
+        }
     }
-  }
+
+    private handleError(error: any) {
+        if (error.response) {
+            // A request was made and the server responded with a status code that falls out of the range of 2xx
+            console.error(`Server responded with status ${error.response.status}: ${error.response.data}`);
+        } else if (error.request) {
+            // The request was made but no response was received
+            console.error('No response received:', error.request);
+        } else {
+            // Something happened in setting up the request that triggered an Error
+            console.error('Error in request setup:', error.message);
+        }
+        console.error('Failed to generate metadata:', error.config);
+    }
 }

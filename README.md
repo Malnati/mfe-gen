@@ -20,6 +20,8 @@ npm install -g @codegenerator/mfe-gen
 
 Este gerador funciona realizando uma requisição HTTP ao servidor com base nos parâmetros fornecidos pelo usuário. A resposta desta requisição é utilizada para criar um arquivo JSON de metadados que contém tanto as informações da requisição quanto da resposta. A partir desses metadados, todos os arquivos de código-fonte necessários são gerados.
 
+Os metadados gerados são armazenados em um arquivo chamado `request-response-metadata.json`, que serve como base para a criação de componentes, serviços e outros arquivos. Isso garante que o código gerado esteja alinhado com a API que ele consumirá, tornando o desenvolvimento mais preciso e automatizado.
+
 Para gerar componentes, serviços, hooks, contextos, arquivos de ambiente, estilos, tipos, validações e um `README.md` personalizado de um projeto React, você precisa informar todos os parâmetros necessários de uma vez só. Aqui está um exemplo:
 
 ```bash
