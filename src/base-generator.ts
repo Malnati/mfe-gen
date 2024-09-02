@@ -38,4 +38,14 @@ export abstract class BaseGenerator {
             return null;
         }
     }
+
+	protected generateResponseType(metadata: any): string {
+		if (metadata && metadata.response && metadata.response.data) {
+			const keys = Object.keys(metadata.response.data);
+			if (keys.length > 0) {
+				return `{ ${keys.map(key => `${key}: any`).join(', ')} }`; 
+			}
+		}
+		return "any";
+	}
 }

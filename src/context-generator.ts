@@ -16,14 +16,15 @@ export class ContextGenerator extends BaseGenerator implements IGenerator {
     generate() {
         const contextName = this.frontendConfig.app;
         const serviceName = `use${this.capitalizeFirstLetter(this.requestConfig.method)}${this.capitalizeEndpoint(this.requestConfig.url)}Service`;
-
+        const metadata = this.loadMetadata();
+		const responseType = this.generateResponseType(metadata);
         const contextContent = `
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { ${serviceName} } from "../services/${serviceName}";
 
 // Definir interfaces para o contexto
 interface ${contextName}ContextProps {
-  state: any;
+  state: ${responseType};
   setState: React.Dispatch<React.SetStateAction<any>>;
   token: string | null;
   login: (newToken: string) => void;
