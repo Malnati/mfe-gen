@@ -4,13 +4,13 @@ import { IGenerator, RequestConfig, FrontendGeneratorConfig } from './interfaces
 import { BaseGenerator } from './base-generator';
 
 export class ServiceGenerator extends BaseGenerator implements IGenerator {
-    private requestConfig: RequestConfig;
     private frontendConfig: FrontendGeneratorConfig;
+    private requestConfig: RequestConfig;
 
-    constructor(config: FrontendGeneratorConfig & { requestConfig: RequestConfig }) {
-        super(config); // Passando o objeto `config` para a classe base
-        this.frontendConfig = config;
-        this.requestConfig = config.requestConfig;
+    constructor(requestConfig: RequestConfig, frontendConfig: FrontendGeneratorConfig) {
+        super(frontendConfig);
+        this.requestConfig = requestConfig;
+        this.frontendConfig = frontendConfig;
     }
 
     generate() {

@@ -1,9 +1,17 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { IGenerator, FrontendGeneratorConfig } from "./interfaces";
+import { IGenerator, FrontendGeneratorConfig, RequestConfig } from "./interfaces";
 import { BaseGenerator } from "./base-generator";
 
 export class ValidationsGenerator extends BaseGenerator implements IGenerator {
+    private frontendConfig: FrontendGeneratorConfig;
+    private requestConfig: RequestConfig;
+
+    constructor(requestConfig: RequestConfig, frontendConfig: FrontendGeneratorConfig) {
+        super(frontendConfig);
+        this.requestConfig = requestConfig;
+        this.frontendConfig = frontendConfig;
+    }
     generate() {
         const validationsDir = path.join(this.config.outputDir, 'validations');
 

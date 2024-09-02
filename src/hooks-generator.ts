@@ -2,15 +2,17 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { IGenerator, FrontendGeneratorConfig } from './interfaces';
+import { IGenerator, FrontendGeneratorConfig, RequestConfig } from './interfaces';
 import { BaseGenerator } from './base-generator';
 
 export class HooksGenerator extends BaseGenerator implements IGenerator {
     private frontendConfig: FrontendGeneratorConfig;
+    private requestConfig: RequestConfig;
 
-    constructor(config: FrontendGeneratorConfig) {
-        super(config);
-        this.frontendConfig = config;
+    constructor(requestConfig: RequestConfig, frontendConfig: FrontendGeneratorConfig) {
+        super(frontendConfig);
+        this.requestConfig = requestConfig;
+        this.frontendConfig = frontendConfig;
     }
 
     generate() {

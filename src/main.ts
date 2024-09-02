@@ -60,7 +60,7 @@ async function main() {
     for (const component of frontendConfig.components) {
         const GeneratorClass = generators[component];
         if (GeneratorClass) {
-            const generator = new GeneratorClass({ ...frontendConfig, requestConfig });
+            const generator = new GeneratorClass(requestConfig, frontendConfig);
             await generator.generate();
         } else {
             console.warn(`Generator for component "${component}" not found.`);
