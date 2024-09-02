@@ -95,14 +95,32 @@ Este projeto é licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE
 │       ├── styles.ts
 │       ├── types.ts
 ├── services/
-│   └── ${this.frontendGeneratorConfig.app}Service.ts
-├── validations/
+│   ├──  ${this.frontendGeneratorConfig.app}Service.ts
 │   └── ${this.frontendGeneratorConfig.app}Validation.ts
 ├── contexts/
 │   └── ${this.frontendGeneratorConfig.app}Context.tsx
 ├── .env.development
 ├── .env.production
 ├── .env.stage
+
+
+├── components/
+│   └── MyApp/
+│       ├── index.tsx
+│       ├── styles.ts
+│       ├── types.ts
+│       ├── MyAppValidation.ts
+├── services/
+│       ├── MyAppTransformer.ts
+│       └── MyAppService.ts
+├── contexts/
+│   └── MyAppContext.tsx
+├── .env.development
+├── .env.production
+├── .env.stage
+├── request-response-metadata.json
+├── types.d.ts
+├── README.md
         `;
     }
 }

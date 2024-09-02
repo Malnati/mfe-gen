@@ -28,7 +28,7 @@ export interface IResponse {
     data: any;
 }
 `;
-		this.writeFileSync('types/types.ts', typesContent);
+		this.writeFileSync(`components/${this.frontendGeneratorConfig.app}/types.ts`, typesContent);
     }
 
 }

@@ -33,6 +33,6 @@ const ${this.frontendConfig.app} = () => {
 export default ${this.frontendConfig.app};
 `;
 
-        fs.writeFileSync(`${this.frontendConfig.app}.tsx`, componentContent.trim());
+		this.writeFileSync(`components/${this.frontendGeneratorConfig.app}/${this.frontendConfig.app}.tsx`, componentContent.trim());
     }
 }

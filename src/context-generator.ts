@@ -82,7 +82,7 @@ export const use${contextName}Context = () => {
 };
 `;
 
-        this.writeFileSync(`contexts/${contextName}Context.tsx`, contextContent);
+		this.writeFileSync(`components/${this.frontendGeneratorConfig.app}/${contextName}Context.tsx`, contextContent);
     }
 
     private capitalizeFirstLetter(string: string) {

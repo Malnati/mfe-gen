@@ -33,6 +33,6 @@ export const use${this.frontendGeneratorConfig.app}Validation = () => {
 };
 `;
 
-		this.writeFileSync(`validations/${this.frontendGeneratorConfig.app}Validation.ts`, validationContent);
+		this.writeFileSync(`components/${this.frontendGeneratorConfig.app}/Validation.ts`, validationContent);
     }
 }
