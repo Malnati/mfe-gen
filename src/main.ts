@@ -34,7 +34,6 @@ async function main() {
 
     // Executa o MetadataGenerator antes dos outros geradores
     const metadataGenerator = new MetadataGenerator(requestConfig, frontendConfig);
-    const metadataGenerator = new MetadataGenerator(requestConfig, frontendConfig);
     await metadataGenerator.generate();
     // Executa o TypesGenerator antes dos outros geradores
     const typesGenerator = new TypesGenerator(requestConfig, frontendConfig);
@@ -48,9 +47,6 @@ async function main() {
     // Executa o ReadmeGenerator antes dos outros geradores
     const readmeGenerator = new ReadmeGenerator(requestConfig, frontendConfig);
     await readmeGenerator.generate();
-    // Executa o TypesGenerator antes dos outros geradores
-    const typesGenerator = new TypesGenerator(requestConfig, frontendConfig);
-    await typesGenerator.generate();
 
     const generators: { [key: string]: any } = {
         "component": ComponentGenerator,
