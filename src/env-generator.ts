@@ -60,18 +60,6 @@ export class EnvGenerator extends BaseGenerator implements IGenerator {
         };
     }
 
-    // Carrega o arquivo de metadados
-    private loadMetadata(): any {
-        try {
-            const metadataPath = path.join(this.frontendGeneratorConfig.outputDir, 'request-response-metadata.json');
-            const metadata = fs.readFileSync(metadataPath, 'utf-8');
-            return JSON.parse(metadata);
-        } catch (error) {
-            console.error("Failed to load metadata:", error);
-            return null;
-        }
-    }
-
     generate() {
         for (const [envContent, fileName] of Object.entries(this.envFiles)) {
 			this.writeFileSync(fileName, envContent);
