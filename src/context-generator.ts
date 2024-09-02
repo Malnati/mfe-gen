@@ -2,25 +2,32 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { IGenerator, FrontendGeneratorConfig } from './interfaces';
+import { IGenerator, FrontendGeneratorConfig, RequestConfig } from './interfaces';
 import { BaseGenerator } from './base-generator';
 
 export class ContextGenerator extends BaseGenerator implements IGenerator {
     private frontendConfig: FrontendGeneratorConfig;
+    private requestConfig: RequestConfig;
 
-    constructor(config: FrontendGeneratorConfig) {
-        super(config);
-        this.frontendConfig = config;
+    constructor(requestConfig: RequestConfig, frontendConfig: FrontendGeneratorConfig) {
+        super(frontendConfig);
+        this.requestConfig = requestConfig;
+        this.frontendConfig = frontendConfig;
     }
 
     generate() {
         const contextName = this.frontendConfig.app;
         const contextContent = `
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
+// Definir interfaces para o contexto
 interface ${contextName}ContextProps {
   state: any;
   setState: React.Dispatch<React.SetStateAction<any>>;
+  fetchData: () => Promise<void>;
+  token: string | null;
+  login: (newToken: string) => void;
+  logout: () => void;
 }
 
 const initialState = {}; // Defina o estado inicial conforme necessário
@@ -29,10 +36,53 @@ const ${contextName}Context = createContext<${contextName}ContextProps | undefin
 
 export const ${contextName}Provider: React.FC = ({ children }) => {
   const [state, setState] = useState(initialState);
+  const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
+
+  const apiUrl = process.env.VITE_API_URL || "${this.requestConfig.url}";
+  const apiKey = process.env.VITE_API_KEY || "";
+
+  useEffect(() => {
+    // Carregar variáveis de ambiente e metadados
+    loadConfig();
+  }, []);
+
+  const loadConfig = () => {
+    // Carregar variáveis de ambiente
+    // Carregar metadados de request/response e armazená-los no state
+  };
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(apiUrl, {
+        headers: {
+          "Authorization": \`Bearer \${token}\`,
+          "API-Key": apiKey,
+        },
+      });
+      const data = await response.json();
+      setState(data);
+    } catch (error) {
+      console.error("Failed to fetch data:", error);
+    }
+  };
+
+  const login = (newToken: string) => {
+    setToken(newToken);
+    localStorage.setItem("token", newToken);
+  };
+
+  const logout = () => {
+    setToken(null);
+    localStorage.removeItem("token");
+  };
 
   const value = {
     state,
     setState,
+    fetchData,
+    token,
+    login,
+    logout,
   };
 
   return (
@@ -45,21 +95,19 @@ export const ${contextName}Provider: React.FC = ({ children }) => {
 export const use${contextName}Context = () => {
   const context = useContext(${contextName}Context);
   if (!context) {
-    throw new Error(
-      \`use${contextName}Context deve ser usado dentro de um ${contextName}Provider\`,
-    );
+    throw new Error(\`use${contextName}Context deve ser usado dentro de um ${contextName}Provider\`);
   }
   return context;
 };
 `;
 
-        // Ajuste para garantir a extensão correta do arquivo
+        // Definir o caminho do arquivo gerado
         const filePath = path.join(this.frontendConfig.outputDir, `contexts/${contextName}Context.tsx`);
 
-        // Cria o diretório se não existir
+        // Criar o diretório, se não existir
         fs.mkdirSync(path.dirname(filePath), { recursive: true });
 
-        // Escreve o conteúdo no arquivo
+        // Escrever o conteúdo no arquivo
         fs.writeFileSync(filePath, contextContent);
         console.log(`Context generated at ${filePath}`);
     }
