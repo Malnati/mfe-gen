@@ -7,7 +7,6 @@ import { ComponentGenerator } from "./component-generator";
 import { StylesGenerator } from "./styles-generator";
 import { TypesGenerator } from "./types-generator";
 import { ServiceGenerator } from "./service-generator";
-import { ValidationsGenerator } from "./validation-generator";
 import { ContextGenerator } from "./context-generator";
 import { ReadmeGenerator } from "./readme-generator";
 import { PackageJsonGenerator } from "./package-json-generator";
@@ -51,7 +50,6 @@ async function main() {
         "component": ComponentGenerator,
         "styles": StylesGenerator,
         "services": ServiceGenerator,
-        "validation": ValidationsGenerator,
         "context": ContextGenerator
     };
 

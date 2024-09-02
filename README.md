@@ -69,17 +69,13 @@ Após a execução do gerador para código front-end, a estrutura do projeto ger
 │       ├── index.tsx
 │       ├── styles.ts
 │       ├── types.ts
-│       ├── MyAppValidation.ts
+│       └── MyAppContext.tsx
 ├── services/
-│       ├── MyAppTransformer.ts
 │       └── MyAppService.ts
-├── contexts/
-│   └── MyAppContext.tsx
 ├── .env.development
 ├── .env.production
 ├── .env.stage
 ├── request-response-metadata.json
-├── types.d.ts
 ├── README.md
 ```
 

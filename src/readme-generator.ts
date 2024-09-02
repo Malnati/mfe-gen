@@ -70,7 +70,6 @@ Isso iniciará a aplicação no modo de desenvolvimento. Geralmente, o projeto s
 - **components/**: Contém os componentes React específicos do seu projeto.
 - **services/**: Inclui os serviços responsáveis pelas requisições ao back-end.
 - **contexts/**: Fornece contextos para gerenciamento de estado global.
-- **validations/**: Funções de validação dos dados de entrada.
 - **styles/**: Estilização dos componentes.
 - **types/**: Tipos e interfaces TypeScript utilizados no projeto.
 
@@ -94,27 +93,9 @@ Este projeto é licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE
 │       ├── index.tsx
 │       ├── styles.ts
 │       ├── types.ts
+│       └── ${this.frontendGeneratorConfig.app}Context.tsx
 ├── services/
 │   ├──  ${this.frontendGeneratorConfig.app}Service.ts
-│   └── ${this.frontendGeneratorConfig.app}Validation.ts
-├── contexts/
-│   └── ${this.frontendGeneratorConfig.app}Context.tsx
-├── .env.development
-├── .env.production
-├── .env.stage
-
-
-├── components/
-│   └── MyApp/
-│       ├── index.tsx
-│       ├── styles.ts
-│       ├── types.ts
-│       ├── MyAppValidation.ts
-├── services/
-│       ├── MyAppTransformer.ts
-│       └── MyAppService.ts
-├── contexts/
-│   └── MyAppContext.tsx
 ├── .env.development
 ├── .env.production
 ├── .env.stage
