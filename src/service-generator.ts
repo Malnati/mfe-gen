@@ -44,6 +44,6 @@ export const use${this.frontendConfig.app}Service = () => {
 };
 `;
 
-		this.writeFileSync(`services/${this.frontendConfig.app}Service.ts`, serviceContent);
+        this.writeFileSync(`services/${this.frontendConfig.app}Service.ts`, serviceContent);
     }
 }

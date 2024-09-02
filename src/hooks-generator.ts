@@ -15,11 +15,26 @@ export class HooksGenerator extends BaseGenerator implements IGenerator {
 
     generate() {
         const hookName = `use${this.frontendConfig.app}Hook`;
+        const serviceName = `use${this.frontendConfig.app}Service`;
+        const metadata = this.loadMetadata();
+
         const hookContent = `
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { ${serviceName} } from '../services/${this.frontendConfig.app}Service';
 
 export const ${hookName} = () => {
     const [state, setState] = useState(null);
+    const { request } = ${serviceName}();
+
+    useEffect(() => {
+        // Utilize os metadados para inicializar o estado ou realizar requisições adicionais
+        const fetchData = async () => {
+            const result = await request(${JSON.stringify(metadata?.request?.body || null)});
+            setState(result);
+        };
+
+        fetchData();
+    }, []);
 
     const handleStateChange = (newState: any) => {
         setState(newState);
@@ -32,6 +47,6 @@ export const ${hookName} = () => {
 };
 `;
 
-		this.writeFileSync(`hooks/${hookName}.ts`, hookContent);
+        this.writeFileSync(`hooks/${hookName}.ts`, hookContent);
     }
 }

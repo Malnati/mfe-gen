@@ -36,8 +36,8 @@ export const ${contextName}Provider: React.FC = ({ children }) => {
   const [state, setState] = useState(initialState);
   const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
 
-  const apiUrl = process.env.VITE_API_URL || "${this.requestConfig.url}";
-  const apiKey = process.env.VITE_API_KEY || "";
+  const apiUrl = process.env.VITE_API_URL;
+  const apiKey = process.env.VITE_API_KEY;
 
   useEffect(() => {
     // Carregar variáveis de ambiente e metadados
