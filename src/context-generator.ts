@@ -15,14 +15,16 @@ export class ContextGenerator extends BaseGenerator implements IGenerator {
 
     generate() {
         const contextName = this.frontendConfig.app;
+        const serviceName = `use${this.capitalizeFirstLetter(this.requestConfig.method)}${this.capitalizeEndpoint(this.requestConfig.url)}Service`;
+
         const contextContent = `
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { ${serviceName} } from "../services/${serviceName}";
 
 // Definir interfaces para o contexto
 interface ${contextName}ContextProps {
   state: any;
   setState: React.Dispatch<React.SetStateAction<any>>;
-  fetchData: () => Promise<void>;
   token: string | null;
   login: (newToken: string) => void;
   logout: () => void;
@@ -35,34 +37,16 @@ const ${contextName}Context = createContext<${contextName}ContextProps | undefin
 export const ${contextName}Provider: React.FC = ({ children }) => {
   const [state, setState] = useState(initialState);
   const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
-
-  const apiUrl = process.env.VITE_API_URL;
-  const apiKey = process.env.VITE_API_KEY;
+  const { ${this.requestConfig.method.toLowerCase()}${this.capitalizeEndpoint(this.requestConfig.url)} } = ${serviceName}();
 
   useEffect(() => {
-    // Carregar variáveis de ambiente e metadados
-    loadConfig();
+    const fetchData = async () => {
+      const result = await ${this.requestConfig.method.toLowerCase()}${this.capitalizeEndpoint(this.requestConfig.url)}(null);
+      setState(result);
+    };
+
+    fetchData();
   }, []);
-
-  const loadConfig = () => {
-    // Carregar variáveis de ambiente
-    // Carregar metadados de request/response e armazená-los no state
-  };
-
-  const fetchData = async () => {
-    try {
-      const response = await fetch(apiUrl, {
-        headers: {
-          "Authorization": \`Bearer \${token}\`,
-          "API-Key": apiKey,
-        },
-      });
-      const data = await response.json();
-      setState(data);
-    } catch (error) {
-      console.error("Failed to fetch data:", error);
-    }
-  };
 
   const login = (newToken: string) => {
     setToken(newToken);
@@ -77,27 +61,36 @@ export const ${contextName}Provider: React.FC = ({ children }) => {
   const value = {
     state,
     setState,
-    fetchData,
     token,
     login,
     logout,
   };
 
   return (
-    <${contextName}Context.Provider value={value}>
-      {children}
-    </${contextName}Context.Provider>
+    <${contextName}Context.Provider value={value}>{children}</${contextName}Context.Provider>
   );
 };
 
 export const use${contextName}Context = () => {
   const context = useContext(${contextName}Context);
   if (!context) {
-    throw new Error(\`use${contextName}Context deve ser usado dentro de um ${contextName}Provider\`);
+    throw new Error(
+      \`use${contextName}Context deve ser usado dentro de um ${contextName}Provider\`,
+    );
   }
   return context;
 };
 `;
-		this.writeFileSync(`contexts/${contextName}Context.tsx`, contextContent);
+
+        this.writeFileSync(`contexts/${contextName}Context.tsx`, contextContent);
+    }
+
+    private capitalizeFirstLetter(string: string) {
+        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    }
+
+    private capitalizeEndpoint(url: string) {
+        const path = new URL(url).pathname.replace(/[^a-zA-Z0-9]/g, '');
+        return this.capitalizeFirstLetter(path);
     }
 }

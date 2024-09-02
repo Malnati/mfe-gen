@@ -69,7 +69,6 @@ Isso iniciará a aplicação no modo de desenvolvimento. Geralmente, o projeto s
 
 - **components/**: Contém os componentes React específicos do seu projeto.
 - **services/**: Inclui os serviços responsáveis pelas requisições ao back-end.
-- **hooks/**: Contém hooks personalizados utilizados nos componentes.
 - **contexts/**: Fornece contextos para gerenciamento de estado global.
 - **validations/**: Funções de validação dos dados de entrada.
 - **styles/**: Estilização dos componentes.
@@ -94,7 +93,6 @@ Este projeto é licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE
 │   └── ${this.frontendGeneratorConfig.app}/
 │       ├── index.tsx
 │       ├── styles.ts
-│       ├── hooks.ts
 │       ├── types.ts
 ├── services/
 │   └── ${this.frontendGeneratorConfig.app}Service.ts

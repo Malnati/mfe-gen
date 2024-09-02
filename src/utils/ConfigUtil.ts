@@ -22,7 +22,7 @@ export class ConfigUtil {
             .requiredOption('-d, --data <type>', 'Corpo da requisição (JSON)', '')
             .requiredOption('-a, --app <type>', 'Nome da aplicação')
             .requiredOption('-o, --outputDir <type>', 'Diretório de saída para os arquivos gerados', './build')
-            .requiredOption('-f, --components <type>', 'Especifique quais componentes gerar (component, styles, hooks, services, validation, context)', 'component')
+            .requiredOption('-f, --components <type>', 'Especifique quais componentes gerar (component, styles, services, validation, context)', 'component')
             .option('--dependencies <items>', 'Dependências para instalar', (value) => value.split(','), [])
             .option('--devDependencies <items>', 'DevDependencies para instalar', (value) => value.split(','), [])
             .parse(process.argv);
@@ -36,9 +36,9 @@ export class ConfigUtil {
             body: options.data,
         };
 
-        const components: ['component' | 'styles' | 'hooks' | 'services' | 'validation' | 'context'] = options.components
+        const components: ['component' | 'styles' | 'services' | 'validation' | 'context'] = options.components
             .split(',')
-            .map((c: string) => c.trim().toLowerCase()) as ['component' | 'styles' | 'hooks' | 'services' | 'validation' | 'context'];
+            .map((c: string) => c.trim().toLowerCase()) as ['component' | 'styles' | 'services' | 'validation' | 'context'];
 
         const frontendConfig: FrontendGeneratorConfig = {
             app: options.app,
@@ -84,7 +84,7 @@ export class ConfigUtil {
 						const content = await fs.promises.readFile(fullPath, 'utf8');
 						const formatted = await prettier.format(content, { ...options, filepath: fullPath });
 						await fs.promises.writeFile(fullPath, formatted);
-					} 
+					}
 				}
 			}
 

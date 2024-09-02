@@ -5,7 +5,6 @@ import { RequestConfig, FrontendGeneratorConfig } from "./interfaces";
 
 import { ComponentGenerator } from "./component-generator";
 import { StylesGenerator } from "./styles-generator";
-import { HooksGenerator } from "./hooks-generator";
 import { TypesGenerator } from "./types-generator";
 import { ServiceGenerator } from "./service-generator";
 import { ValidationsGenerator } from "./validation-generator";
@@ -51,7 +50,6 @@ async function main() {
     const generators: { [key: string]: any } = {
         "component": ComponentGenerator,
         "styles": StylesGenerator,
-        "hooks": HooksGenerator,
         "services": ServiceGenerator,
         "validation": ValidationsGenerator,
         "context": ContextGenerator
