@@ -13,7 +13,7 @@ export class ValidationsGenerator extends BaseGenerator implements IGenerator {
         this.frontendConfig = frontendConfig;
     }
     generate() {
-        const validationsDir = path.join(this.config.outputDir, 'validations');
+        const validationsDir = path.join(this.frontendGeneratorConfig.outputDir, 'validations');
 
         // Verifica se o diretório existe, caso contrário, cria-o
         if (!fs.existsSync(validationsDir)) {
@@ -21,7 +21,7 @@ export class ValidationsGenerator extends BaseGenerator implements IGenerator {
         }
 
         const validationContent = `
-export const use${this.config.app}Validation = () => {
+export const use${this.frontendGeneratorConfig.app}Validation = () => {
     const validate = (data: any): boolean => {
         // Adicione aqui a lógica de validação específica
         return true;
@@ -33,6 +33,6 @@ export const use${this.config.app}Validation = () => {
 };
 `;
 
-		this.writeFileSync(`validations/${this.config.app}Validation.ts`, validationContent);
+		this.writeFileSync(`validations/${this.frontendGeneratorConfig.app}Validation.ts`, validationContent);
     }
 }

@@ -35,7 +35,7 @@ export class StylesGenerator extends BaseGenerator implements IGenerator {
             },
         });
         `;
-		
-        this.writeFileSync(`components/${this.config.app}/styles.ts`, stylesTemplate);
+
+        this.writeFileSync(`components/${this.frontendGeneratorConfig.app}/styles.ts`, stylesTemplate);
     }
 }

@@ -42,8 +42,8 @@ export class PackageJsonGenerator extends BaseGenerator implements IGenerator {
 
         this.writeFileSync('package.json', JSON.stringify(packageJsonContent, null, 2));
 
-        await this.installDependencies(this.frontendConfig.outputDir, Object.keys(this.config.dependencies || {}), false);
-        await this.installDependencies(this.frontendConfig.outputDir, Object.keys(this.config.devDependencies || {}), true);
+        await this.installDependencies(this.frontendConfig.outputDir, Object.keys(this.frontendGeneratorConfig.dependencies || {}), false);
+        await this.installDependencies(this.frontendConfig.outputDir, Object.keys(this.frontendGeneratorConfig.devDependencies || {}), true);
     }
 
     private installDependencies(directory: string, dependencies: string[], isDev: boolean) {

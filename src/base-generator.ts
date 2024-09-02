@@ -5,16 +5,16 @@ import * as path from 'path';
 import { FrontendGeneratorConfig } from "./interfaces";
 
 export abstract class BaseGenerator {
-    protected config: FrontendGeneratorConfig;
+    protected frontendGeneratorConfig: FrontendGeneratorConfig;
 
     constructor(config: FrontendGeneratorConfig) {
-        this.config = config;
+        this.frontendGeneratorConfig = config;
     }
 
     abstract generate(): void;
 
     protected writeFileSync(relativePath: string, content: string) {
-        const filePath = path.join(this.config.outputDir, relativePath);
+        const filePath = path.join(this.frontendGeneratorConfig.outputDir, relativePath);
 
         try {
             // Criar o diretório se não existir

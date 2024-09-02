@@ -21,7 +21,7 @@ export class ReadmeGenerator extends BaseGenerator implements IGenerator {
 
     private createReadmeContent(): string {
         return `
-# ${this.config.app}
+# ${this.frontendGeneratorConfig.app}
 
 Este projeto foi gerado automaticamente usando o *mfe-gen*. Ele contém uma estrutura básica para um micro-frontend desenvolvido em React.
 
@@ -47,10 +47,10 @@ Este projeto é um micro-frontend que pode ser integrado em uma aplicação maio
 
 ### Executando o Projeto
 
-1. Navegue até o diretório \`${this.config.outputDir}\`:
+1. Navegue até o diretório \`${this.frontendGeneratorConfig.outputDir}\`:
 
 \`\`\`
-cd ${this.config.outputDir}
+cd ${this.frontendGeneratorConfig.outputDir}
 \`\`\`
 
 2. Instale as dependências do projeto gerado:
@@ -91,19 +91,19 @@ Este projeto é licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE
 
     private generateFolderStructure(): string {
         return `
-./${this.config.outputDir}
+./${this.frontendGeneratorConfig.outputDir}
 ├── components/
-│   └── ${this.config.app}/
+│   └── ${this.frontendGeneratorConfig.app}/
 │       ├── index.tsx
 │       ├── styles.ts
 │       ├── hooks.ts
 │       ├── types.ts
 ├── services/
-│   └── ${this.config.app}Service.ts
+│   └── ${this.frontendGeneratorConfig.app}Service.ts
 ├── validations/
-│   └── ${this.config.app}Validation.ts
+│   └── ${this.frontendGeneratorConfig.app}Validation.ts
 ├── contexts/
-│   └── ${this.config.app}Context.tsx
+│   └── ${this.frontendGeneratorConfig.app}Context.tsx
 ├── .env.development
 ├── .env.production
 ├── .env.stage

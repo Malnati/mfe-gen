@@ -1,7 +1,5 @@
 // src/types-generator.ts
 
-import * as fs from 'fs';
-import * as path from 'path';
 import { IGenerator, FrontendGeneratorConfig, RequestConfig } from './interfaces';
 import { BaseGenerator } from './base-generator';
 

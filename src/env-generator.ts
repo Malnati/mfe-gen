@@ -63,7 +63,7 @@ export class EnvGenerator extends BaseGenerator implements IGenerator {
     // Carrega o arquivo de metadados
     private loadMetadata(): any {
         try {
-            const metadataPath = path.join(this.config.outputDir, 'request-response-metadata.json');
+            const metadataPath = path.join(this.frontendGeneratorConfig.outputDir, 'request-response-metadata.json');
             const metadata = fs.readFileSync(metadataPath, 'utf-8');
             return JSON.parse(metadata);
         } catch (error) {
