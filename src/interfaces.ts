@@ -4,7 +4,7 @@ export interface FrontendGeneratorConfig {
     app: string;
     outputDir: string;
     components: [
-        "component" | "styles" | "hooks" | "types" | "services" | "validation" | "context" | "readme"
+        "component" | "styles" | "types" | "services" | "validation" | "context" | "readme"
     ];
     scripts?: Record<string, string>; // Novas propriedades para scripts
     dependencies?: Record<string, string>; // Novas propriedades para dependências
@@ -15,7 +15,6 @@ export interface ComponentOptions {
 	name: string
 	path: string
 	styles?: boolean
-	hooks?: boolean
 	types?: boolean
 	services?: boolean
 	validation?: boolean

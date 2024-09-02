@@ -1,7 +1,5 @@
 // src/types-generator.ts
 
-import * as fs from 'fs';
-import * as path from 'path';
 import { IGenerator, FrontendGeneratorConfig, RequestConfig } from './interfaces';
 import { BaseGenerator } from './base-generator';
 
@@ -30,13 +28,7 @@ export interface IResponse {
     data: any;
 }
 `;
-		const outputPath = path.join(this.frontendConfig.outputDir, `types.d.ts`);
-		try {
-			fs.writeFileSync(outputPath, typesContent);
-			console.log(`Types generated at ${outputPath}`);
-		} catch (error) {
-			console.error(`Failed to generate content at ${outputPath} for the setup ${JSON.stringify(this.frontendConfig), null, 2}: `, JSON.stringify(typesContent, null, 2), error);
-		}
+		this.writeFileSync(`components/${this.frontendGeneratorConfig.app}/types.ts`, typesContent);
     }
 
 }

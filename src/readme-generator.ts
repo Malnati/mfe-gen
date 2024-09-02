@@ -1,7 +1,5 @@
 // src/readme-generator.ts
 
-import * as fs from 'fs';
-import * as path from 'path';
 import { FrontendGeneratorConfig, IGenerator, RequestConfig } from "./interfaces";
 import { BaseGenerator } from "./base-generator";
 
@@ -16,14 +14,12 @@ export class ReadmeGenerator extends BaseGenerator implements IGenerator {
     }
     generate() {
         const content = this.createReadmeContent();
-        const filePath = path.join(this.config.outputDir, 'README.md');
-        fs.writeFileSync(filePath, content);
-        console.log(`README generated at ${filePath}`);
+        this.writeFileSync('README.md', content);
     }
 
     private createReadmeContent(): string {
         return `
-# ${this.config.app}
+# ${this.frontendGeneratorConfig.app}
 
 Este projeto foi gerado automaticamente usando o *mfe-gen*. Ele contém uma estrutura básica para um micro-frontend desenvolvido em React.
 
@@ -49,10 +45,10 @@ Este projeto é um micro-frontend que pode ser integrado em uma aplicação maio
 
 ### Executando o Projeto
 
-1. Navegue até o diretório \`${this.config.outputDir}\`:
+1. Navegue até o diretório \`${this.frontendGeneratorConfig.outputDir}\`:
 
 \`\`\`
-cd ${this.config.outputDir}
+cd ${this.frontendGeneratorConfig.outputDir}
 \`\`\`
 
 2. Instale as dependências do projeto gerado:
@@ -73,9 +69,7 @@ Isso iniciará a aplicação no modo de desenvolvimento. Geralmente, o projeto s
 
 - **components/**: Contém os componentes React específicos do seu projeto.
 - **services/**: Inclui os serviços responsáveis pelas requisições ao back-end.
-- **hooks/**: Contém hooks personalizados utilizados nos componentes.
 - **contexts/**: Fornece contextos para gerenciamento de estado global.
-- **validations/**: Funções de validação dos dados de entrada.
 - **styles/**: Estilização dos componentes.
 - **types/**: Tipos e interfaces TypeScript utilizados no projeto.
 
@@ -93,22 +87,21 @@ Este projeto é licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE
 
     private generateFolderStructure(): string {
         return `
-./${this.config.outputDir}
+./${this.frontendGeneratorConfig.outputDir}
 ├── components/
-│   └── ${this.config.app}/
+│   └── ${this.frontendGeneratorConfig.app}/
 │       ├── index.tsx
 │       ├── styles.ts
-│       ├── hooks.ts
 │       ├── types.ts
+│       └── ${this.frontendGeneratorConfig.app}Context.tsx
 ├── services/
-│   └── ${this.config.app}Service.ts
-├── validations/
-│   └── ${this.config.app}Validation.ts
-├── contexts/
-│   └── ${this.config.app}Context.tsx
+│   ├──  ${this.frontendGeneratorConfig.app}Service.ts
 ├── .env.development
 ├── .env.production
 ├── .env.stage
+├── request-response-metadata.json
+├── types.d.ts
+├── README.md
         `;
     }
 }

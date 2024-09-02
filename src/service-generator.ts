@@ -1,24 +1,27 @@
-import * as fs from 'fs';
-import * as path from 'path';
+// src/service-generator.ts
+
 import { IGenerator, RequestConfig, FrontendGeneratorConfig } from './interfaces';
 import { BaseGenerator } from './base-generator';
 
 export class ServiceGenerator extends BaseGenerator implements IGenerator {
-    private requestConfig: RequestConfig;
     private frontendConfig: FrontendGeneratorConfig;
+    private requestConfig: RequestConfig;
 
-    constructor(config: FrontendGeneratorConfig & { requestConfig: RequestConfig }) {
-        super(config); // Passando o objeto `config` para a classe base
-        this.frontendConfig = config;
-        this.requestConfig = config.requestConfig;
+    constructor(requestConfig: RequestConfig, frontendConfig: FrontendGeneratorConfig) {
+        super(frontendConfig);
+        this.requestConfig = requestConfig;
+        this.frontendConfig = frontendConfig;
     }
 
     generate() {
+        const serviceName = `use${this.capitalizeFirstLetter(this.requestConfig.method)}${this.capitalizeEndpoint(this.requestConfig.url)}Service`;
+        const functionName = `${this.requestConfig.method.toLowerCase()}${this.capitalizeEndpoint(this.requestConfig.url)}`;
+
         const serviceContent = `
 import axios from "axios";
 
-export const use${this.frontendConfig.app}Service = () => {
-  const request = async (data: any): Promise<any> => {
+export const ${serviceName} = () => {
+  const ${functionName} = async (data: any): Promise<any> => {
     try {
       const response = await axios.${this.requestConfig.method.toLowerCase()}(
         \`\${process.env.API_BASE_URL || ''}${new URL(this.requestConfig.url).pathname}\`,
@@ -39,13 +42,21 @@ export const use${this.frontendConfig.app}Service = () => {
   };
 
   return {
-    request,
+    ${functionName},
   };
 };
+
 `;
 
-        const filePath = path.join(this.frontendConfig.outputDir, `services/${this.frontendConfig.app}Service.ts`);
-        fs.writeFileSync(filePath, serviceContent);
-        console.log(`Service generated at ${filePath}`);
+        this.writeFileSync(`services/${serviceName}.ts`, serviceContent);
+    }
+
+    private capitalizeFirstLetter(string: string) {
+        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    }
+
+    private capitalizeEndpoint(url: string) {
+        const path = new URL(url).pathname.replace(/[^a-zA-Z0-9]/g, '');
+        return this.capitalizeFirstLetter(path);
     }
 }

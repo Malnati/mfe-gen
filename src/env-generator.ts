@@ -1,5 +1,7 @@
 // src/env-generator.ts
 
+// src/env-generator.ts
+
 import * as fs from 'fs';
 import * as path from 'path';
 import { FrontendGeneratorConfig, IGenerator, RequestConfig } from "./interfaces";
@@ -60,36 +62,9 @@ export class EnvGenerator extends BaseGenerator implements IGenerator {
         };
     }
 
-    // Carrega o arquivo de metadados
-    private loadMetadata(): any {
-        try {
-            const metadataPath = path.join(this.config.outputDir, 'request-response-metadata.json');
-            const metadata = fs.readFileSync(metadataPath, 'utf-8');
-            return JSON.parse(metadata);
-        } catch (error) {
-            console.error("Failed to load metadata:", error);
-            return null;
-        }
-    }
-
     generate() {
-        for (const [env, fileName] of Object.entries(this.envFiles)) {
-            this.generateEnvFile(env, fileName);
-        }
-    }
-
-    private generateEnvFile(env: string, fileName: string) {
-        const envContent = Object.entries(this.envConfig)
-            .map(([key, value]) => `${key}=${value}`)
-            .join('\n');
-
-        const filePath = path.join(this.config.outputDir, fileName);
-
-        try {
-            fs.writeFileSync(filePath, envContent);
-            console.log(`${fileName} file has been generated in ${this.config.outputDir}`);
-        } catch (error) {
-            console.error(`Error writing ${fileName}: ${error}`);
+        for (const [envContent, fileName] of Object.entries(this.envFiles)) {
+			this.writeFileSync(fileName, envContent);
         }
     }
 }

@@ -1,11 +1,18 @@
 // src/styles-generator.ts
 
-import * as fs from 'fs';
-import * as path from 'path';
-import { IGenerator, FrontendGeneratorConfig } from "./interfaces";
+import { IGenerator, FrontendGeneratorConfig, RequestConfig } from "./interfaces";
 import { BaseGenerator } from "./base-generator";
 
 export class StylesGenerator extends BaseGenerator implements IGenerator {
+    private frontendConfig: FrontendGeneratorConfig;
+    private requestConfig: RequestConfig;
+
+    constructor(requestConfig: RequestConfig, frontendConfig: FrontendGeneratorConfig) {
+        super(frontendConfig);
+        this.requestConfig = requestConfig;
+        this.frontendConfig = frontendConfig;
+    }
+
     generate() {
         const stylesTemplate = `
         import { makeStyles } from '@material-ui/core/styles';
@@ -27,11 +34,6 @@ export class StylesGenerator extends BaseGenerator implements IGenerator {
         });
         `;
 
-        // Definir o caminho do arquivo a ser gerado
-        const filePath = path.join(this.config.outputDir, `components/${this.config.app}/styles.ts`);
-
-        // Escrever o arquivo de estilos no sistema de arquivos
-        fs.writeFileSync(filePath, stylesTemplate);
-        console.log(`Styles generated at ${filePath}`);
+		this.writeFileSync(`components/${this.frontendGeneratorConfig.app}/styles.ts`, stylesTemplate);
     }
 }
