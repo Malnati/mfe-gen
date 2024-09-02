@@ -32,7 +32,7 @@ O gerador também cria automaticamente um arquivo `types.d.ts`, que contém toda
 
 ### Comando de Geração
 
-Para gerar componentes, serviços, hooks, contextos, arquivos de ambiente, estilos, tipos, validações e um `README.md` personalizado de um projeto React, você precisa informar todos os parâmetros necessários de uma vez só. Aqui está um exemplo:
+Para gerar os componentes, serviços, hooks, contextos, arquivos de ambiente, estilos, validações, e o `README.md` personalizado de um projeto React, você precisa informar os parâmetros necessários para a requisição e o nome da aplicação. Aqui está um exemplo:
 
 ```bash
 npm run build && npx ts-node src/main.ts \
@@ -41,8 +41,10 @@ npm run build && npx ts-node src/main.ts \
   -H 'Authorization: Bearer XYZ' \
   -a 'MyApp' \
   -o './build' \
-  -f 'component,services,hooks,context,env,styles,types,validation,readme'
+  -f 'component,services,hooks,context,styles,validation'
 ```
+
+> **Nota:** Os arquivos `.env`, `types.d.ts`, `request-response-metadata.json`, `package.json`, e `README.md` são gerados automaticamente e não precisam ser especificados nos parâmetros.
 
 ### Parâmetros Suportados
 
@@ -52,7 +54,7 @@ npm run build && npx ts-node src/main.ts \
 - `--data`: Corpo da requisição (em formato JSON). (opcional)
 - `--app`: Nome da aplicação.
 - `--outputDir`: Diretório de saída para os arquivos gerados (padrão: `./build`).
-- `--components`: Especifica quais componentes gerar (por exemplo, `component,services,styles,hooks,types,validation,context,readme`).
+- `--components`: Especifica quais componentes gerar (por exemplo, `component,services,styles,hooks,validation,context,readme`).
 - `--dependencies`: Lista de dependências a serem instaladas. (opcional)
 - `--devDependencies`: Lista de devDependencies a serem instaladas. (opcional)
 

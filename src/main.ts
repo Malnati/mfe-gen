@@ -38,18 +38,23 @@ async function main() {
     // Executa o TypesGenerator antes dos outros geradores
     const typesGenerator = new TypesGenerator(requestConfig, frontendConfig);
     await typesGenerator.generate();
+    // Executa o EnvGenerator antes dos outros geradores
+    const envGenerator = new EnvGenerator(requestConfig, frontendConfig);
+    await envGenerator.generate();
+    // Executa o PackageJsonGenerator antes dos outros geradores
+    const packageGenerator = new PackageJsonGenerator(requestConfig, frontendConfig);
+    await packageGenerator.generate();
+    // Executa o ReadmeGenerator antes dos outros geradores
+    const readmeGenerator = new ReadmeGenerator(requestConfig, frontendConfig);
+    await readmeGenerator.generate();
 
     const generators: { [key: string]: any } = {
         "component": ComponentGenerator,
         "styles": StylesGenerator,
         "hooks": HooksGenerator,
-        "types": TypesGenerator,
-        "services": ServiceGenerator, // Passar requestConfig junto com frontendConfig
+        "services": ServiceGenerator,
         "validation": ValidationsGenerator,
-        "context": ContextGenerator,
-        "package.json": PackageJsonGenerator,
-        "env": EnvGenerator,
-        "readme": ReadmeGenerator
+        "context": ContextGenerator
     };
 
     for (const component of frontendConfig.components) {

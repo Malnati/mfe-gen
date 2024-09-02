@@ -11,8 +11,8 @@ export class TypesGenerator extends BaseGenerator implements IGenerator {
 
     constructor(requestConfig: RequestConfig, frontendConfig: FrontendGeneratorConfig) {
         super(frontendConfig);
-        this.frontendConfig = frontendConfig;
         this.requestConfig = requestConfig;
+        this.frontendConfig = frontendConfig;
     }
 
     generate() {
@@ -30,15 +30,13 @@ export interface IResponse {
     data: any;
 }
 `;
-
-        // Definir o caminho do arquivo a ser gerado
-        const filePath = path.join(this.frontendConfig.outputDir, `src/types.d.ts`);
-
-        // Cria o diretório se não existir
-        fs.mkdirSync(path.dirname(filePath), { recursive: true });
-
-        // Escreve o conteúdo no arquivo
-        fs.writeFileSync(filePath, typesContent);
-        console.log(`Types generated at ${filePath}`);
+		const outputPath = path.join(this.frontendConfig.outputDir, `types.d.ts`);
+		try {
+			fs.writeFileSync(outputPath, typesContent);
+			console.log(`Types generated at ${outputPath}`);
+		} catch (error) {
+			console.error(`Failed to generate content at ${outputPath} for the setup ${JSON.stringify(this.frontendConfig), null, 2}: `, JSON.stringify(typesContent, null, 2), error);
+		}
     }
+
 }
