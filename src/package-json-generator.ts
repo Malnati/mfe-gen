@@ -7,7 +7,7 @@ import { BaseGenerator } from "./base-generator";
 import { exec } from "child_process";
 
 export class PackageJsonGenerator extends BaseGenerator implements IGenerator {
-	
+
     private frontendConfig: FrontendGeneratorConfig;
     private requestConfig: RequestConfig;
 
@@ -19,7 +19,7 @@ export class PackageJsonGenerator extends BaseGenerator implements IGenerator {
 
     async generate() {
         const packageJsonContent = {
-            name: `@platform/${this.config.app}`,
+            name: `@platform/${this.frontendConfig.app}`,
             scripts: {
                 start: "webpack serve",
                 "start:standalone": "webpack serve --env standalone",
@@ -37,26 +37,13 @@ export class PackageJsonGenerator extends BaseGenerator implements IGenerator {
             },
             devDependencies: {},
             dependencies: {},
-            types: `dist/${this.config.app}.d.ts`
+            types: `dist/${this.frontendConfig.app}.d.ts`
         };
 
-        const buildDir = this.config.outputDir;
+        this.writeFileSync('package.json', JSON.stringify(packageJsonContent, null, 2));
 
-        if (!fs.existsSync(buildDir)) {
-            fs.mkdirSync(buildDir, { recursive: true });
-        }
-
-        const filePath = path.join(buildDir, 'package.json');
-
-        try {
-            fs.writeFileSync(filePath, JSON.stringify(packageJsonContent, null, 2));
-            console.log(`package.json has been generated at ${filePath}`);
-        } catch (error) {
-            console.error(`Error writing package.json file: ${error}`);
-        }
-
-        await this.installDependencies(buildDir, Object.keys(this.config.dependencies || {}), false);
-        await this.installDependencies(buildDir, Object.keys(this.config.devDependencies || {}), true);
+        await this.installDependencies(this.frontendConfig.outputDir, Object.keys(this.config.dependencies || {}), false);
+        await this.installDependencies(this.frontendConfig.outputDir, Object.keys(this.config.devDependencies || {}), true);
     }
 
     private installDependencies(directory: string, dependencies: string[], isDev: boolean) {

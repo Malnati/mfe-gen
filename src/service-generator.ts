@@ -44,8 +44,6 @@ export const use${this.frontendConfig.app}Service = () => {
 };
 `;
 
-        const filePath = path.join(this.frontendConfig.outputDir, `services/${this.frontendConfig.app}Service.ts`);
-        fs.writeFileSync(filePath, serviceContent);
-        console.log(`Service generated at ${filePath}`);
+		this.writeFileSync(`services/${this.frontendConfig.app}Service.ts`, serviceContent);
     }
 }

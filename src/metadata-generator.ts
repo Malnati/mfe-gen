@@ -39,9 +39,7 @@ export class MetadataGenerator extends BaseGenerator implements IGenerator {
                 },
             };
 
-            const metadataPath = path.join(this.frontendConfig.outputDir, 'request-response-metadata.json');
-            fs.writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
-            console.log(`Metadata generated at ${metadataPath}`);
+            this.writeFileSync('request-response-metadata.json', JSON.stringify(metadata, null, 2));
         } catch (error) {
             this.handleError(error);
         }

@@ -16,9 +16,7 @@ export class ReadmeGenerator extends BaseGenerator implements IGenerator {
     }
     generate() {
         const content = this.createReadmeContent();
-        const filePath = path.join(this.config.outputDir, 'README.md');
-        fs.writeFileSync(filePath, content);
-        console.log(`README generated at ${filePath}`);
+        this.writeFileSync('README.md', content);
     }
 
     private createReadmeContent(): string {

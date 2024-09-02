@@ -35,12 +35,7 @@ export class StylesGenerator extends BaseGenerator implements IGenerator {
             },
         });
         `;
-
-        // Definir o caminho do arquivo a ser gerado
-        const filePath = path.join(this.config.outputDir, `components/${this.config.app}/styles.ts`);
-
-        // Escrever o arquivo de estilos no sistema de arquivos
-        fs.writeFileSync(filePath, stylesTemplate);
-        console.log(`Styles generated at ${filePath}`);
+		
+        this.writeFileSync(`components/${this.config.app}/styles.ts`, stylesTemplate);
     }
 }

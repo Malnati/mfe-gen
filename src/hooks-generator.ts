@@ -34,13 +34,6 @@ export const ${hookName} = () => {
 };
 `;
 
-        const hooksDir = path.join(this.frontendConfig.outputDir, 'hooks');
-        if (!fs.existsSync(hooksDir)) {
-            fs.mkdirSync(hooksDir, { recursive: true });
-        }
-
-        const filePath = path.join(hooksDir, `${hookName}.ts`);
-        fs.writeFileSync(filePath, hookContent);
-        console.log(`Hook generated at ${filePath}`);
+		this.writeFileSync(`hooks/${hookName}.ts`, hookContent);
     }
 }

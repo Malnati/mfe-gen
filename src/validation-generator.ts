@@ -33,8 +33,6 @@ export const use${this.config.app}Validation = () => {
 };
 `;
 
-        const filePath = path.join(validationsDir, `${this.config.app}Validation.ts`);
-        fs.writeFileSync(filePath, validationContent);
-        console.log(`Validation generated at ${filePath}`);
+		this.writeFileSync(`validations/${this.config.app}Validation.ts`, validationContent);
     }
 }

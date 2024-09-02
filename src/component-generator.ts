@@ -33,7 +33,7 @@ const ${this.frontendConfig.app} = () => {
 export default ${this.frontendConfig.app};
 `;
 
-        const filePath = path.join(outputDir, `${this.config.app}.tsx`);
+        const filePath = path.join(outputDir, `${this.frontendConfig.app}.tsx`);
         fs.writeFileSync(filePath, componentContent.trim());
 
         console.log(`Component generated at ${filePath}`);

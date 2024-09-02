@@ -100,15 +100,6 @@ export const use${contextName}Context = () => {
   return context;
 };
 `;
-
-        // Definir o caminho do arquivo gerado
-        const filePath = path.join(this.frontendConfig.outputDir, `contexts/${contextName}Context.tsx`);
-
-        // Criar o diretório, se não existir
-        fs.mkdirSync(path.dirname(filePath), { recursive: true });
-
-        // Escrever o conteúdo no arquivo
-        fs.writeFileSync(filePath, contextContent);
-        console.log(`Context generated at ${filePath}`);
+		this.writeFileSync(`contexts/${contextName}Context.tsx`, contextContent);
     }
 }

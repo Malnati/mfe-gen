@@ -73,23 +73,8 @@ export class EnvGenerator extends BaseGenerator implements IGenerator {
     }
 
     generate() {
-        for (const [env, fileName] of Object.entries(this.envFiles)) {
-            this.generateEnvFile(env, fileName);
-        }
-    }
-
-    private generateEnvFile(env: string, fileName: string) {
-        const envContent = Object.entries(this.envConfig)
-            .map(([key, value]) => `${key}=${value}`)
-            .join('\n');
-
-        const filePath = path.join(this.config.outputDir, fileName);
-
-        try {
-            fs.writeFileSync(filePath, envContent);
-            console.log(`${fileName} file has been generated in ${this.config.outputDir}`);
-        } catch (error) {
-            console.error(`Error writing ${fileName}: ${error}`);
+        for (const [envContent, fileName] of Object.entries(this.envFiles)) {
+			this.writeFileSync(fileName, envContent);
         }
     }
 }
