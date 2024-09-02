@@ -1,5 +1,5 @@
-import * as fs from 'fs';
-import * as path from 'path';
+// src/service-generator.ts
+
 import { IGenerator, RequestConfig, FrontendGeneratorConfig } from './interfaces';
 import { BaseGenerator } from './base-generator';
 
