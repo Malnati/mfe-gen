@@ -60,4 +60,6 @@ export class MetadataGenerator extends BaseGenerator implements IGenerator {
         }
         console.error('Failed to generate metadata:', error.config);
     }
+		  this.requestConfig = requestConfig;
+    }
 }
