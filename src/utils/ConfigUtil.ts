@@ -84,9 +84,7 @@ export class ConfigUtil {
 						const content = await fs.promises.readFile(fullPath, 'utf8');
 						const formatted = await prettier.format(content, { ...options, filepath: fullPath });
 						await fs.promises.writeFile(fullPath, formatted);
-					} else {
-						console.log(`Ignorando arquivo não suportado pelo Prettier: ${fullPath}`);
-					}
+					} 
 				}
 			}
 
