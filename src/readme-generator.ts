@@ -1,7 +1,5 @@
 // src/readme-generator.ts
 
-import * as fs from 'fs';
-import * as path from 'path';
 import { FrontendGeneratorConfig, IGenerator, RequestConfig } from "./interfaces";
 import { BaseGenerator } from "./base-generator";
 
