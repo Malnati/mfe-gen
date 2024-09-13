@@ -3,6 +3,8 @@
 import { IGenerator, FrontendGeneratorConfig, RequestConfig } from "./interfaces";
 import { BaseGenerator } from "./base-generator";
 import { exec } from "child_process";
+import path from "path"
+import ejs from "ejs"
 
 export class PackageJsonGenerator extends BaseGenerator implements IGenerator {
 
@@ -16,28 +18,21 @@ export class PackageJsonGenerator extends BaseGenerator implements IGenerator {
     }
 
     async generate() {
-        const packageJsonContent = {
-            name: `@platform/${this.frontendConfig.app}`,
-            scripts: {
-                start: "webpack serve",
-                "start:standalone": "webpack serve --env standalone",
-                build: "concurrently pnpm:build:*",
-                "build:webpack": "webpack --mode=production",
-                analyze: "webpack --mode=production --env analyze",
-                lint: "eslint src --ext js,ts,tsx",
-                format: "prettier --write .",
-                "check-format": "prettier --check .",
-                test: "cross-env BABEL_ENV=test jest",
-                "watch-tests": "cross-env BABEL_ENV=test jest --watch",
-                coverage: "cross-env BABEL_ENV=test jest --coverage",
-                "build:types": "tsc"
-            },
-            devDependencies: {},
-            dependencies: {},
-            types: `dist/${this.frontendConfig.app}.d.ts`
-        };
+        const filePath = path.join(__dirname, './templates/package-json.ejs');
 
-        this.writeFileSync('package.json', JSON.stringify(packageJsonContent, null, 2));
+        const data = {
+            appName: this.frontendConfig.app,
+        }
+
+        ejs.renderFile(filePath, data, (err, packageJsonContent) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            this.writeFileSync('package.json', packageJsonContent);
+        });
+
+
 
         await this.installDependencies(this.frontendConfig.outputDir, Object.keys(this.frontendGeneratorConfig.dependencies || {}), false);
         await this.installDependencies(this.frontendConfig.outputDir, Object.keys(this.frontendGeneratorConfig.devDependencies || {}), true);
