@@ -1,9 +1,10 @@
 // src/component-generator.ts
 
+import ejs from "ejs"
 import * as fs from 'fs';
 import * as path from 'path';
-import { IGenerator, FrontendGeneratorConfig, RequestConfig } from "./interfaces";
 import { BaseGenerator } from "./base-generator";
+import { IGenerator, FrontendGeneratorConfig, RequestConfig } from "./interfaces";
 
 export class ComponentGenerator extends BaseGenerator implements IGenerator {
 
@@ -17,22 +18,42 @@ export class ComponentGenerator extends BaseGenerator implements IGenerator {
     }
 
     generate() {
+        const componentPath = path.join(__dirname, './templates/component.ejs');
+        const stylesPath = path.join(__dirname, './templates/component.styles.ejs');
+        const typesPath = path.join(__dirname, './templates/component.types.ejs');
         const outputDir = path.resolve(this.frontendConfig.outputDir, 'components', this.frontendConfig.app);
 
         if (!fs.existsSync(outputDir)) {
             fs.mkdirSync(outputDir, { recursive: true });
         }
 
-        const componentContent = `
-import React from 'react';
+        const data = {
+            appName: this.frontendConfig.app
+        }
 
-const ${this.frontendConfig.app} = () => {
-	return <div>${this.frontendConfig.app} component generated successfully!</div>;
-};
+        ejs.renderFile(componentPath, data, (err, componentContent) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            // this.writeFileSync(`components/${this.frontendGeneratorConfig.app}/${this.frontendConfig.app}.tsx`, componentContent.trim());
+            this.writeFileSync(`components/${this.frontendConfig.app}/index.tsx`, componentContent.trim());
+        });
 
-export default ${this.frontendConfig.app};
-`;
+        ejs.renderFile(stylesPath, data, (err, componentContent) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            this.writeFileSync(`components/${this.frontendConfig.app}/styles.scss`, componentContent.trim());
+        });
 
-		this.writeFileSync(`components/${this.frontendGeneratorConfig.app}/${this.frontendConfig.app}.tsx`, componentContent.trim());
+        ejs.renderFile(typesPath, data, (err, componentContent) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            this.writeFileSync(`components/${this.frontendConfig.app}/types.ts`, componentContent.trim());
+        });
     }
 }

@@ -18,7 +18,7 @@ npm install -g @codegenerator/mfe-gen
 
 ### Geração de Código Front-End
 
-Este gerador funciona realizando uma requisição HTTP ao servidor com base nos parâmetros fornecidos pelo usuário. A resposta desta requisição é utilizada para criar um arquivo JSON de metadados que contém tanto as informações da requisição quanto da resposta. A partir desses metadados, todos os arquivos de código-fonte necessários são gerados.
+Este gerador funciona realizando uma requisição HTTP ao servidor com base nos parâmetros fornecidos pelo usuário. A resposta desta requisição é utilizada para criar um arquivo JSON de metadados que contém tanto as informações da requisição quanto da resposta. A partir desses metadados, todos os arquivos de código-fonte necessários são gerados através de template ejs.
 
 ### Utilizando Metadados para Geração de Arquivos `.env`
 

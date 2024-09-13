@@ -2,6 +2,8 @@
 
 import { FrontendGeneratorConfig, IGenerator, RequestConfig } from "./interfaces";
 import { BaseGenerator } from "./base-generator";
+import path from "path"
+import ejs from "ejs"
 
 export class ReadmeGenerator extends BaseGenerator implements IGenerator {
     private frontendConfig: FrontendGeneratorConfig;
@@ -13,95 +15,19 @@ export class ReadmeGenerator extends BaseGenerator implements IGenerator {
         this.requestConfig = requestConfig;
     }
     generate() {
-        const content = this.createReadmeContent();
-        this.writeFileSync('README.md', content);
-    }
+        const filePath = path.join(__dirname, './templates/readme.ejs');
 
-    private createReadmeContent(): string {
-        return `
-# ${this.frontendGeneratorConfig.app}
+        const data = {
+            appName: this.frontendGeneratorConfig.app,
+            outputDir: this.frontendGeneratorConfig.outputDir
+        }
 
-Este projeto foi gerado automaticamente usando o *mfe-gen*. Ele contém uma estrutura básica para um micro-frontend desenvolvido em React.
-
-## Estrutura de Pastas e Arquivos
-
-A estrutura do projeto gerado será semelhante a esta:
-
-\`\`\`
-${this.generateFolderStructure()}
-\`\`\`
-
-## Instalação
-
-Para instalar todas as dependências necessárias, execute o comando:
-
-\`\`\`
-npm install
-\`\`\`
-
-## Uso
-
-Este projeto é um micro-frontend que pode ser integrado em uma aplicação maior usando Single SPA. Aqui estão algumas instruções básicas para começar:
-
-### Executando o Projeto
-
-1. Navegue até o diretório \`${this.frontendGeneratorConfig.outputDir}\`:
-
-\`\`\`
-cd ${this.frontendGeneratorConfig.outputDir}
-\`\`\`
-
-2. Instale as dependências do projeto gerado:
-
-\`\`\`
-npm install
-\`\`\`
-
-3. Inicie o projeto:
-
-\`\`\`
-npm start
-\`\`\`
-
-Isso iniciará a aplicação no modo de desenvolvimento. Geralmente, o projeto será acessível em \`http://localhost:3000\`.
-
-### Estrutura do Código
-
-- **components/**: Contém os componentes React específicos do seu projeto.
-- **services/**: Inclui os serviços responsáveis pelas requisições ao back-end.
-- **contexts/**: Fornece contextos para gerenciamento de estado global.
-- **styles/**: Estilização dos componentes.
-- **types/**: Tipos e interfaces TypeScript utilizados no projeto.
-
-### Personalização
-
-Sinta-se à vontade para modificar e expandir este projeto conforme necessário para atender às necessidades do seu produto.
-
----
-
-### Licença
-
-Este projeto é licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-`;
-    }
-
-    private generateFolderStructure(): string {
-        return `
-./${this.frontendGeneratorConfig.outputDir}
-├── components/
-│   └── ${this.frontendGeneratorConfig.app}/
-│       ├── index.tsx
-│       ├── styles.ts
-│       ├── types.ts
-│       └── ${this.frontendGeneratorConfig.app}Context.tsx
-├── services/
-│   ├──  ${this.frontendGeneratorConfig.app}Service.ts
-├── .env.development
-├── .env.production
-├── .env.stage
-├── request-response-metadata.json
-├── types.d.ts
-├── README.md
-        `;
+        ejs.renderFile(filePath, data, (err, readmeContent) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            this.writeFileSync('README.md', readmeContent);
+        });
     }
 }

@@ -2,6 +2,8 @@
 
 import { IGenerator, FrontendGeneratorConfig, RequestConfig } from "./interfaces";
 import { BaseGenerator } from "./base-generator";
+import path from "path"
+import ejs from "ejs"
 
 export class StylesGenerator extends BaseGenerator implements IGenerator {
     private frontendConfig: FrontendGeneratorConfig;
@@ -14,26 +16,14 @@ export class StylesGenerator extends BaseGenerator implements IGenerator {
     }
 
     generate() {
-        const stylesTemplate = `
-        import { makeStyles } from '@material-ui/core/styles';
+        const filePath = path.join(__dirname, './templates/styles.ejs');
 
-        export const useStyles = makeStyles({
-            container: {
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                padding: '20px',
-            },
-            input: {
-                padding: '10px',
-                fontSize: '16px',
-                width: '200px',
-                borderRadius: '5px',
-                border: '1px solid #ccc',
-            },
+        ejs.renderFile(filePath, {}, (err, stylesTemplate) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            this.writeFileSync(`components/${this.frontendGeneratorConfig.app}/styles.ts`, stylesTemplate);
         });
-        `;
-
-		this.writeFileSync(`components/${this.frontendGeneratorConfig.app}/styles.ts`, stylesTemplate);
     }
 }
