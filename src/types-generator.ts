@@ -2,6 +2,8 @@
 
 import { IGenerator, FrontendGeneratorConfig, RequestConfig } from './interfaces';
 import { BaseGenerator } from './base-generator';
+import path from "path"
+import ejs from "ejs"
 
 export class TypesGenerator extends BaseGenerator implements IGenerator {
     private frontendConfig: FrontendGeneratorConfig;
@@ -14,21 +16,15 @@ export class TypesGenerator extends BaseGenerator implements IGenerator {
     }
 
     generate() {
-        const typesContent = `
-export interface IRequest {
-    method: string;
-    url: string;
-    headers: Record<string, string>;
-    body?: any;
-}
+        const filePath = path.join(__dirname, './templates/types.ejs');
 
-export interface IResponse {
-    status: number;
-    headers: Record<string, string>;
-    data: any;
-}
-`;
-		this.writeFileSync(`components/${this.frontendGeneratorConfig.app}/types.ts`, typesContent);
+        ejs.renderFile(filePath, {}, (err, typesContent) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            this.writeFileSync(`components/${this.frontendGeneratorConfig.app}/types.ts`, typesContent);
+        });
     }
 
 }
