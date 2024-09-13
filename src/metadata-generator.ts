@@ -16,19 +16,15 @@ export class MetadataGenerator extends BaseGenerator implements IGenerator {
 
     async generate() {
         try {
-            const response = await axios({
+            const request = {
                 method: this.requestConfig.method,
                 url: this.requestConfig.url,
                 headers: this.requestConfig.headers,
                 data: this.requestConfig.body,
-            });
+            }
+            const response = await axios(request);
             const metadata = {
-                request: {
-                    method: this.requestConfig.method,
-                    url: this.requestConfig.url,
-                    headers: this.requestConfig.headers,
-                    data: this.requestConfig.body,
-                },
+                request,
                 response: {
                     status: response.status,
                     headers: response.headers,
