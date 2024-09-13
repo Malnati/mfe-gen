@@ -2,6 +2,8 @@
 
 import { IGenerator, RequestConfig, FrontendGeneratorConfig } from './interfaces';
 import { BaseGenerator } from './base-generator';
+import ejs from "ejs"
+import path from "path"
 
 export class ServiceGenerator extends BaseGenerator implements IGenerator {
     private frontendConfig: FrontendGeneratorConfig;
@@ -14,41 +16,26 @@ export class ServiceGenerator extends BaseGenerator implements IGenerator {
     }
 
     generate() {
+        const filePath = path.join(__dirname, './templates/services.ejs');
         const serviceName = `use${this.capitalizeFirstLetter(this.requestConfig.method)}${this.capitalizeEndpoint(this.requestConfig.url)}Service`;
         const functionName = `${this.requestConfig.method.toLowerCase()}${this.capitalizeEndpoint(this.requestConfig.url)}`;
 
-        const serviceContent = `
-import axios from "axios";
+        const data = {
+            serviceName,
+            functionName,
+            method: this.requestConfig.method.toLowerCase(),
+            url: process.env.API_BASE_URL || '' + new URL(this.requestConfig.url).pathname,
+            headers: this.requestConfig.headers
+        };
 
-export const ${serviceName} = () => {
-  const ${functionName} = async (data: any): Promise<any> => {
-    try {
-      const response = await axios.${this.requestConfig.method.toLowerCase()}(
-        \`\${process.env.API_BASE_URL || ''}${new URL(this.requestConfig.url).pathname}\`,
-        data,
-        {
-          headers: {
-            ${Object.entries(this.requestConfig.headers)
-              .map(([key, value]) => `${key}: \`${value}\``)
-              .join(",\n          ")}
-          },
-        },
-      );
-      return response.data;
-    } catch (error) {
-      console.error("Erro ao realizar a requisição:", error);
-      return { error: "Erro ao realizar a requisição" };
-    }
-  };
 
-  return {
-    ${functionName},
-  };
-};
-
-`;
-
-        this.writeFileSync(`services/${serviceName}.ts`, serviceContent);
+        ejs.renderFile(filePath ,data, (err, serviceContent) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            this.writeFileSync(`services/${serviceName}.ts`, serviceContent);
+        });
     }
 
     private capitalizeFirstLetter(string: string) {
